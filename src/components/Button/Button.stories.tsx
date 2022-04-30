@@ -1,30 +1,14 @@
-import React from 'react';
-
+import Button from '@mui/material/Button';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import Button from './Button';
+import MoreInfoButton from './MoreInfoButton';
+import PlayButton from './PlayButton';
 
 export default {
   title: 'Button',
   component: Button,
 } as ComponentMeta<typeof Button>;
 
-const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
+export const Play: ComponentStory<typeof Button> = () => <PlayButton />;
 
-export const Default = Template.bind({});
-Default.args = {
-  children: 'Default',
-  variant: 'contained',
-};
-
-export const Text = Template.bind({});
-Text.args = {
-  children: 'Contained',
-  variant: 'text',
-};
-
-export const Outlined = Template.bind({});
-Outlined.args = {
-  children: 'Outlined',
-  variant: 'outlined',
-};
+export const MoreInfo: ComponentStory<typeof Button> = () => <MoreInfoButton />;

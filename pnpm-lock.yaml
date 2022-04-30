@@ -25,9 +25,11 @@ specifiers:
   eslint-plugin-import: ^2.26.0
   eslint-plugin-storybook: ^0.5.11
   next: 12.1.5
+  path: ^0.12.7
   prettier: ^2.6.2
   react: 18.1.0
   react-dom: 18.1.0
+  tsconfig-paths-webpack-plugin: ^3.5.2
   typescript: 4.6.4
   webpack: ^5.72.0
 
@@ -38,6 +40,7 @@ dependencies:
   '@emotion/styled': 11.8.1_43b0c0febcc59fceea267ed228243096
   '@mui/material': 5.6.3_49280857c0b01a563210e4681e2bddf5
   next: 12.1.5_001a3213be6019b6046daddd80c79ee1
+  path: 0.12.7
   react: 18.1.0
   react-dom: 18.1.0_react@18.1.0
 
@@ -61,6 +64,7 @@ devDependencies:
   eslint-plugin-import: 2.26.0_eslint@8.14.0
   eslint-plugin-storybook: 0.5.11_eslint@8.14.0+typescript@4.6.4
   prettier: 2.6.2
+  tsconfig-paths-webpack-plugin: 3.5.2
   typescript: 4.6.4
   webpack: 5.72.0
 
@@ -7561,7 +7565,6 @@ packages:
 
   /inherits/2.0.1:
     resolution: {integrity: sha1-sX0I0ya0Qj5Wjv9xn5GwscvfafE=}
-    dev: true
 
   /inherits/2.0.3:
     resolution: {integrity: sha1-Yzwsg+PaQqUC9SRmAiSA9CCCYd4=}
@@ -9304,6 +9307,13 @@ packages:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
     engines: {node: '>=8'}
 
+  /path/0.12.7:
+    resolution: {integrity: sha1-1NwqUGxM4hl+tIHr/NWzbAFAsQ8=}
+    dependencies:
+      process: 0.11.10
+      util: 0.10.3
+    dev: false
+
   /pbkdf2/3.1.2:
     resolution: {integrity: sha512-iuh7L6jA7JEGu2WxDwtQP1ddOpaJNC4KlDEFfdQajSGgGPNi4OyDc2R7QnbY2bR9QjBVGwgvTdNJZoE7RaxUMA==}
     engines: {node: '>=0.12'}
@@ -9526,7 +9536,6 @@ packages:
   /process/0.11.10:
     resolution: {integrity: sha1-czIwDoQBYb2j5podHZGn1LwW8YI=}
     engines: {node: '>= 0.6.0'}
-    dev: true
 
   /promise-inflight/1.0.1:
     resolution: {integrity: sha1-mEcocL8igTL8vdhoEputEsPAKeM=}
@@ -11113,6 +11122,14 @@ packages:
       typescript: 4.6.4
     dev: true
 
+  /tsconfig-paths-webpack-plugin/3.5.2:
+    resolution: {integrity: sha512-EhnfjHbzm5IYI9YPNVIxx1moxMI4bpHD2e0zTXeDNQcwjjRaGepP7IhTHJkyDBG0CAOoxRfe7jCG630Ou+C6Pw==}
+    dependencies:
+      chalk: 4.1.2
+      enhanced-resolve: 5.9.3
+      tsconfig-paths: 3.14.1
+    dev: true
+
   /tsconfig-paths/3.14.1:
     resolution: {integrity: sha512-fxDhWnFSLt3VuTwtvJt5fpwxBHg5AdKWMsgcPOOIilyjymcYVZoCQF8fvFRezCNfblEXmi+PcM1eYHeOAgXCOQ==}
     dependencies:
@@ -11443,7 +11460,6 @@ packages:
     resolution: {integrity: sha1-evsa/lCAUkZInj23/g7TeTNqwPk=}
     dependencies:
       inherits: 2.0.1
-    dev: true
 
   /util/0.11.1:
     resolution: {integrity: sha512-HShAsny+zS2TZfaXxD9tYj4HQGlBezXZMZuM/S5PKLLoZkShZiGk9o5CzukI1LVHZvjdvZ2Sj1aW/Ndn2NB/HQ==}
