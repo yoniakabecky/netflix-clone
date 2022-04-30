@@ -1,10 +1,5 @@
-import styled from '@emotion/styled';
 import type { NextPage } from 'next';
 import Head from 'next/head';
-
-const Heading = styled.h1`
-  padding-left: 40px;
-`;
 
 const Home: NextPage = () => {
   return (
@@ -16,7 +11,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-        <Heading>hello</Heading>
+        <h1 style={{ color: 'white' }}>hello</h1>
       </main>
     </div>
   );
