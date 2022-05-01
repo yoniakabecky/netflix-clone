@@ -1,6 +1,6 @@
 import Button, { ButtonProps } from '@mui/material/Button';
 
-import PlayIcon from 'components/Icon/PlayIcon';
+import PlayIcon from 'components/uis/Icon/PlayIcon';
 
 export default function PlayButton(props: ButtonProps) {
   return (

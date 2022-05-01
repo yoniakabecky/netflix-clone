@@ -1,6 +1,6 @@
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 
-import CrossIcon from 'components/Icon/CrossIcon';
+import CrossIcon from 'components/uis/Icon/CrossIcon';
 
 export default function CloseButton({ sx, ...props }: IconButtonProps) {
   return (

@@ -7,7 +7,7 @@ import CloseButton from './CloseButton';
 import MuteButton from './MuteButton';
 
 export default {
-  title: 'IconButton',
+  title: 'UI/IconButton',
   component: IconButton,
 } as ComponentMeta<typeof IconButton>;
 

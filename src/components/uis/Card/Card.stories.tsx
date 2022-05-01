@@ -4,7 +4,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react';
 import ThumbnailCard from './ThumbnailCard';
 
 export default {
-  title: 'Card',
+  title: 'UI/Card',
   component: Card,
 } as ComponentMeta<typeof Card>;
 

@@ -1,6 +1,6 @@
 import Button, { ButtonProps } from '@mui/material/Button';
 
-import InfoIcon from 'components/Icon/InfoIcon';
+import InfoIcon from 'components/uis/Icon/InfoIcon';
 
 export default function MoreInfoButton(props: ButtonProps) {
   return (

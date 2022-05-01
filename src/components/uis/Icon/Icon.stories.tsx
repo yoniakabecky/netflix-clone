@@ -13,7 +13,7 @@ import ThumbsUpIcon from './ThumbsUpIcon';
 import UnmuteIcon from './UnmuteIcon';
 
 export default {
-  title: 'Icon',
+  title: 'UI/Icon',
   component: SvgIcon,
 } as ComponentMeta<typeof SvgIcon>;
 

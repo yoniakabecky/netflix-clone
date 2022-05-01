@@ -5,7 +5,7 @@ import MoreInfoButton from './MoreInfoButton';
 import PlayButton from './PlayButton';
 
 export default {
-  title: 'Button',
+  title: 'UI/Button',
   component: Button,
 } as ComponentMeta<typeof Button>;
 

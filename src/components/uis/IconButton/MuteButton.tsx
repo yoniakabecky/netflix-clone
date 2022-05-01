@@ -1,7 +1,7 @@
 import { IconButtonProps } from '@mui/material';
 
-import MuteIcon from 'components/Icon/MuteIcon';
-import UnmuteIcon from 'components/Icon/UnmuteIcon';
+import MuteIcon from 'components/uis/Icon/MuteIcon';
+import UnmuteIcon from 'components/uis/Icon/UnmuteIcon';
 
 import StyledIconButton from './StyledIconButton';
 
@@ -11,7 +11,7 @@ interface Props extends IconButtonProps {
 
 export default function MuteButton({ isMute, ...props }: Props) {
   return (
-    <StyledIconButton color={'secondary'} {...props}>
+    <StyledIconButton {...props}>
       {isMute ? <UnmuteIcon /> : <MuteIcon />}
     </StyledIconButton>
   );

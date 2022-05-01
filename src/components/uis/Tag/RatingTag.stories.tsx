@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react';
 import RatingTag from './RatingTag';
 
 export default {
-  title: 'Tag',
+  title: 'UI/Tag',
   component: RatingTag,
 } as ComponentMeta<typeof RatingTag>;
 
