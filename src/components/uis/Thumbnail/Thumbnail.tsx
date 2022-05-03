@@ -10,7 +10,7 @@ interface Props extends CardProps {
   imgProps: ImageProps;
 }
 
-export default function ThumbnailCard({ imgProps, sx, ...props }: Props) {
+export default function Thumbnail({ imgProps, sx, ...props }: Props) {
   const { src, alt, layout, ...rest } = imgProps;
 
   return (
