@@ -9,6 +9,9 @@ import MuteButton from './MuteButton';
 export default {
   title: 'UI/IconButton',
   component: IconButton,
+  parameters: {
+    backgrounds: { default: 'dark' },
+  },
 } as ComponentMeta<typeof IconButton>;
 
 export const Close: ComponentStory<typeof IconButton> = () => <CloseButton />;

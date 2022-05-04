@@ -10,6 +10,7 @@ import PlayIcon from './PlayIcon';
 import PlusIcon from './PlusIcon';
 import SearchIcon from './SearchIcon';
 import ThumbsUpIcon from './ThumbsUpIcon';
+import TwoThumbsUpIcon from './TwoThumbsUpIcon';
 import UnmuteIcon from './UnmuteIcon';
 
 export default {
@@ -26,4 +27,7 @@ export const Play: ComponentStory<typeof SvgIcon> = () => <PlayIcon />;
 export const Plus: ComponentStory<typeof SvgIcon> = () => <PlusIcon />;
 export const Search: ComponentStory<typeof SvgIcon> = () => <SearchIcon />;
 export const ThumbsUp: ComponentStory<typeof SvgIcon> = () => <ThumbsUpIcon />;
+export const TwoThumbsUp: ComponentStory<typeof SvgIcon> = () => (
+  <TwoThumbsUpIcon />
+);
 export const Unmute: ComponentStory<typeof SvgIcon> = () => <UnmuteIcon />;
