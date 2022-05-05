@@ -5,6 +5,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react';
 
 import CloseButton from './CloseButton';
 import MuteButton from './MuteButton';
+import PlayIconButton from './PlayIconButton';
 
 export default {
   title: 'UI/IconButton',
@@ -23,3 +24,5 @@ export const Mute: ComponentStory<typeof IconButton> = () => {
     <MuteButton isMute={isMute} onClick={() => setIsMute((prev) => !prev)} />
   );
 };
+
+export const Play: ComponentStory<typeof IconButton> = () => <PlayIconButton />;

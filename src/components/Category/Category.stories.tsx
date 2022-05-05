@@ -7,6 +7,9 @@ import Category from './Category';
 export default {
   title: 'Category',
   component: Category,
+  parameters: {
+    backgrounds: { default: 'dark' },
+  },
 } as ComponentMeta<typeof Category>;
 
 const Template: ComponentStory<typeof Category> = (args) => (

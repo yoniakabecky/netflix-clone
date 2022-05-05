@@ -2,6 +2,7 @@ import SvgIcon from '@mui/material/SvgIcon';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
 import BellIcon from './BellIcon';
+import CheckIcon from './CheckIcon';
 import ChevronDownIcon from './ChevronDownIcon';
 import CrossIcon from './CrossIcon';
 import InfoIcon from './InfoIcon';
@@ -19,6 +20,7 @@ export default {
 } as ComponentMeta<typeof SvgIcon>;
 
 export const Bell: ComponentStory<typeof SvgIcon> = () => <BellIcon />;
+export const Check: ComponentStory<typeof SvgIcon> = () => <CheckIcon />;
 export const Cross: ComponentStory<typeof SvgIcon> = () => <CrossIcon />;
 export const Down: ComponentStory<typeof SvgIcon> = () => <ChevronDownIcon />;
 export const Mute: ComponentStory<typeof SvgIcon> = () => <MuteIcon />;
