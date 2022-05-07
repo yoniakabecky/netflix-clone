@@ -8,6 +8,8 @@ export default function PlayIconButton({ sx, ...props }: IconButtonProps) {
       sx={{
         color: 'common.black',
         backgroundColor: 'common.white',
+        width: '2rem',
+        height: '2rem',
         '&:hover': {
           backgroundColor: 'rgba(255, 255, 255, 0.8)',
         },

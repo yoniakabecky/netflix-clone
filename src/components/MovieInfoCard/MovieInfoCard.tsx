@@ -39,12 +39,14 @@ export default function MovieInfoCard(props: Props) {
       <CardContent>
         <Box display={'flex'}>
           <Stack direction={'row'} spacing={1} flexGrow={1}>
-            <PlayIconButton sx={{ width: 44 }} />
+            <PlayIconButton />
 
             <StyledTooltip title="Add to My List">
-              <StyledIconButton>
-                <CheckIcon />
-              </StyledIconButton>
+              <Box>
+                <StyledIconButton>
+                  <CheckIcon />
+                </StyledIconButton>
+              </Box>
             </StyledTooltip>
 
             <LikeButtons
@@ -55,9 +57,11 @@ export default function MovieInfoCard(props: Props) {
           </Stack>
 
           <StyledTooltip title={'Episodes & info'}>
-            <StyledIconButton sx={{ flexGrow: 0 }}>
-              <ChevronDownIcon />
-            </StyledIconButton>
+            <Box>
+              <StyledIconButton sx={{ flexGrow: 0 }}>
+                <ChevronDownIcon />
+              </StyledIconButton>
+            </Box>
           </StyledTooltip>
         </Box>
       </CardContent>

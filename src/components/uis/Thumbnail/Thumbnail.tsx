@@ -16,8 +16,10 @@ export default function Thumbnail({ imgProps, sx, ...props }: Props) {
   return (
     <Card
       sx={{
-        width: 320,
-        height: 180,
+        width: '16vw',
+        maxWidth: 320,
+        height: '9vw',
+        maxHeight: 180,
         ...sx,
       }}
       {...props}

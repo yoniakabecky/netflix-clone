@@ -7,10 +7,7 @@ export default function CloseButton({ sx, ...props }: IconButtonProps) {
     <IconButton
       color={'secondary'}
       sx={{
-        backgroundColor: 'background.default',
-        '&:hover': {
-          backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        },
+        '&:hover': { backgroundColor: 'rgba(0, 0, 0, 0.5)' },
         ...sx,
       }}
       {...props}

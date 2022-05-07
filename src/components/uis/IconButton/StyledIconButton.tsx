@@ -8,6 +8,8 @@ export default function StyledIconButton(props: IconButtonProps) {
 const Root = styled(IconButton)(({ theme }) => ({
   border: '2px solid',
   borderColor: '#999',
+  width: '2rem',
+  height: '2rem',
   '&:hover': {
     borderColor: theme.palette.secondary.main,
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
