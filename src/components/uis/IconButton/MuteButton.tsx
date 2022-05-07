@@ -12,7 +12,7 @@ interface Props extends IconButtonProps {
 export default function MuteButton({ isMute, ...props }: Props) {
   return (
     <StyledIconButton {...props}>
-      {isMute ? <UnmuteIcon /> : <MuteIcon />}
+      {isMute ? <MuteIcon /> : <UnmuteIcon />}
     </StyledIconButton>
   );
 }

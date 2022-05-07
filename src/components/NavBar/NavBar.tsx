@@ -1,7 +1,6 @@
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Image from 'next/image';
@@ -13,13 +12,13 @@ export default function NavBar() {
   return (
     <AppBar
       elevation={0}
-      position={'static'}
+      position={'sticky'}
       sx={{
         background:
           'linear-gradient(180deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 100%)',
       }}
     >
-      <Container maxWidth={'xl'}>
+      <Box sx={{ width: '90%', mx: 'auto' }}>
         <Toolbar disableGutters>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <Box position={'relative'} width={'2rem'} height={'2rem'} mr={2}>
@@ -53,7 +52,7 @@ export default function NavBar() {
             <Box></Box>
           </Box>
         </Toolbar>
-      </Container>
+      </Box>
     </AppBar>
   );
 }

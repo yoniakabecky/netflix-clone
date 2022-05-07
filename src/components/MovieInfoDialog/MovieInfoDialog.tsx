@@ -16,6 +16,7 @@ import { StyledTooltip } from 'components/uis/Tooltip';
 interface Props extends DialogProps {
   open: boolean;
   onClose: () => void;
+  movie?: any;
 }
 
 export default function MovieInfoDialog({ open, onClose, ...props }: Props) {
@@ -33,7 +34,7 @@ export default function MovieInfoDialog({ open, onClose, ...props }: Props) {
           position: 'absolute',
           right: 8,
           top: 8,
-          zIndex: 'zIndex.modal',
+          zIndex: 'modal',
         }}
       />
 
@@ -55,7 +56,7 @@ export default function MovieInfoDialog({ open, onClose, ...props }: Props) {
           bottom={'4rem'}
           display={'flex'}
           height={'2rem'}
-          width={'90%'}
+          width={'100%'}
           px={5}
         >
           <Stack direction={'row'} spacing={1} flexGrow={1}>
