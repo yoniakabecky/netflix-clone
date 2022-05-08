@@ -3,40 +3,41 @@ import Box from '@mui/material/Box';
 import Category from 'components/Category';
 import FeaturedMovie from 'components/FeaturedMovie';
 import NavBar from 'components/NavBar';
+import { FeaturedMovieModel } from 'models';
+import { Movie, ReleaseDates, Trending } from 'tmdb/types';
 
-type Movie = {
-  title: string;
-  description: string;
-  alt: string;
-  src: string;
-};
-
-type CategoryType = {
+interface CategoryType extends Trending {
   name: string;
-  list: Movie[];
-};
+}
 
 type Props = {
   featuredMovie: Movie;
+  releaseDates: ReleaseDates;
   categories: CategoryType[];
 };
 
-export default function BrowsePage({ featuredMovie, categories }: Props) {
+export default function BrowsePage({
+  featuredMovie,
+  releaseDates,
+  categories,
+}: Props) {
+  const mainMovie = new FeaturedMovieModel(featuredMovie, releaseDates);
+
   return (
     <>
       <NavBar />
 
-      <Box component={'section'}>
+      <Box component={'section'} mb={6}>
         {/* featured movie */}
-        <FeaturedMovie movie={featuredMovie} />
+        <FeaturedMovie movie={mainMovie} />
 
         {/* categories */}
-        <Box width={'90%'} mx={'auto'}>
+        <Box>
           {categories.map((category, i) => (
             <Category
               key={i}
               title={category.name}
-              movies={category.list}
+              movies={category.results}
               handleClick={() => null}
             />
           ))}

@@ -2,6 +2,11 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 
 import BrowsePage from 'components/BrowsePage';
+import {
+  featuredMovieDummy,
+  releaseDatesDummy,
+  trendingResultDummy,
+} from 'tmdb/dummy';
 
 const Home: NextPage = () => {
   return (
@@ -14,36 +19,12 @@ const Home: NextPage = () => {
 
       <main>
         <BrowsePage
-          featuredMovie={{
-            title: 'the suicide squat',
-            description:
-              'Lorem, ipsum dolor sit amet consectetur adipisicing elit.',
-            alt: 'the suicide squat',
-            src: '/Netflix_Logo.svg',
-          }}
+          featuredMovie={featuredMovieDummy}
+          releaseDates={releaseDatesDummy}
           categories={[
             {
-              name: 'My List',
-              list: [
-                {
-                  title: '',
-                  description: '',
-                  src: '/Netflix_Logo.svg',
-                  alt: 'sample',
-                },
-                {
-                  title: '',
-                  description: '',
-                  src: '/Netflix_Logo.svg',
-                  alt: 'sample',
-                },
-                {
-                  title: '',
-                  description: '',
-                  src: '/Netflix_Logo.svg',
-                  alt: 'sample',
-                },
-              ],
+              name: 'Trending',
+              ...trendingResultDummy,
             },
           ]}
         />

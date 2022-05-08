@@ -3,6 +3,8 @@ import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
 import FeaturedMovie from './FeaturedMovie';
+import { featuredMovieDummy, releaseDatesDummy } from 'tmdb/dummy';
+import { FeaturedMovieModel } from 'models';
 
 export default {
   title: 'FeaturedMovie',
@@ -14,11 +16,6 @@ export default {
 
 export const Default: ComponentStory<typeof FeaturedMovie> = () => (
   <FeaturedMovie
-    movie={{
-      title: 'the suicide squat',
-      description: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit.',
-      alt: 'the suicide squat',
-      src: '/Netflix_Logo.svg',
-    }}
+    movie={new FeaturedMovieModel(featuredMovieDummy, releaseDatesDummy)}
   />
 );

@@ -4,16 +4,12 @@ import Typography from '@mui/material/Typography';
 
 import ChevronDownIcon from 'components/uis/Icon/ChevronDownIcon';
 import { Thumbnail } from 'components/uis/Thumbnail';
-
-// TODO: use fetched data type
-type Movie = {
-  alt: string;
-  src: string;
-};
+import { MovieListResult } from 'tmdb/types';
+import { smallImgLoader } from 'utils/imgLoader';
 
 type Props = {
   title: string;
-  movies: Movie[];
+  movies: MovieListResult[];
   handleClick: () => void;
 };
 
@@ -27,6 +23,8 @@ export default function Category({ title, movies, handleClick }: Props) {
         alignItems={'center'}
         sx={{
           mb: 1,
+          mx: 'auto',
+          width: '90%',
           cursor: 'pointer',
           '& .MuiTypography-body2': { opacity: 0 },
           '&:hover .MuiTypography-body2': { opacity: 1 },
@@ -53,10 +51,20 @@ export default function Category({ title, movies, handleClick }: Props) {
         </Typography>
       </Box>
 
-      <Stack direction={'row'} spacing={2}>
-        {movies.map(({ src, alt }, i) => (
-          <Thumbnail imgProps={{ src, alt }} key={i} />
-        ))}
+      <Stack direction={'row'} spacing={2} overflow={'auto'} px={'5%'}>
+        {movies.map(
+          (movie, i) =>
+            movie.backdrop_path && (
+              <Thumbnail
+                imgProps={{
+                  src: movie.backdrop_path,
+                  alt: movie.title,
+                  loader: smallImgLoader,
+                }}
+                key={i}
+              />
+            )
+        )}
       </Stack>
     </Box>
   );
