@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 
 import BrowsePage from 'components/BrowsePage';
+import { CategoryModel } from 'models';
 import {
   featuredMovieDummy,
   releaseDatesDummy,
@@ -21,12 +22,7 @@ const Home: NextPage = () => {
         <BrowsePage
           featuredMovie={featuredMovieDummy}
           releaseDates={releaseDatesDummy}
-          categories={[
-            {
-              name: 'Trending',
-              ...trendingResultDummy,
-            },
-          ]}
+          categories={[new CategoryModel('Trending', trendingResultDummy)]}
         />
       </main>
     </div>

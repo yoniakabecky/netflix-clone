@@ -2,9 +2,10 @@ import React from 'react';
 
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import FeaturedMovie from './FeaturedMovie';
-import { featuredMovieDummy, releaseDatesDummy } from 'tmdb/dummy';
 import { FeaturedMovieModel } from 'models';
+import { featuredMovieDummy, releaseDatesDummy } from 'tmdb/dummy';
+
+import FeaturedMovie from './FeaturedMovie';
 
 export default {
   title: 'FeaturedMovie',

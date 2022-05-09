@@ -60,7 +60,10 @@ export default function FeaturedMovie({ movie }: Props) {
             <Box
               mb={4}
               width={'40%'}
-              sx={{ textShadow: '0.25rem 0.25rem 0.5rem rgba(0, 0, 0, 0.25)' }}
+              sx={{
+                color: 'secondary.main',
+                textShadow: '0.25rem 0.25rem 0.5rem rgba(0, 0, 0, 0.25)',
+              }}
             >
               <Typography variant={'h3'} sx={{ mb: 2, fontWeight: 'bold' }}>
                 {movie.title}

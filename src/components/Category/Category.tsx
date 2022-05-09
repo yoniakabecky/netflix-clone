@@ -4,17 +4,19 @@ import Typography from '@mui/material/Typography';
 
 import ChevronDownIcon from 'components/uis/Icon/ChevronDownIcon';
 import { Thumbnail } from 'components/uis/Thumbnail';
-import { MovieListResult } from 'tmdb/types';
+import { CategoryModel } from 'models';
 import { smallImgLoader } from 'utils/imgLoader';
 
 type Props = {
-  title: string;
-  movies: MovieListResult[];
-  handleClick: () => void;
+  category: CategoryModel;
 };
 
-export default function Category({ title, movies, handleClick }: Props) {
-  if (movies.length <= 0) return <Box />;
+export default function Category({ category }: Props) {
+  const { name, results } = category;
+
+  if (results.length <= 0) return <Box />;
+
+  const handleClick = () => null;
 
   return (
     <Box>
@@ -33,16 +35,17 @@ export default function Category({ title, movies, handleClick }: Props) {
       >
         <Typography
           color={'secondary'}
-          variant={'h6'}
+          variant={'h5'}
           sx={{
             textTransform: 'capitalize',
+            fontWeight: 'bold',
           }}
         >
-          {title}
+          {name}
         </Typography>
         <Typography
           variant={'body2'}
-          sx={{ ml: 1, color: '#54b9c5', transition: 'opacity 1s' }}
+          sx={{ ml: 2, color: '#54b9c5', transition: 'opacity 1s' }}
         >
           Explore All
           <ChevronDownIcon
@@ -52,12 +55,12 @@ export default function Category({ title, movies, handleClick }: Props) {
       </Box>
 
       <Stack direction={'row'} spacing={2} overflow={'auto'} px={'5%'}>
-        {movies.map(
+        {results.map(
           (movie, i) =>
-            movie.backdrop_path && (
+            movie.backdropPath && (
               <Thumbnail
                 imgProps={{
-                  src: movie.backdrop_path,
+                  src: movie.backdropPath,
                   alt: movie.title,
                   loader: smallImgLoader,
                 }}

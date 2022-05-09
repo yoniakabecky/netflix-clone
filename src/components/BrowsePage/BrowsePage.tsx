@@ -3,17 +3,13 @@ import Box from '@mui/material/Box';
 import Category from 'components/Category';
 import FeaturedMovie from 'components/FeaturedMovie';
 import NavBar from 'components/NavBar';
-import { FeaturedMovieModel } from 'models';
-import { Movie, ReleaseDates, Trending } from 'tmdb/types';
-
-interface CategoryType extends Trending {
-  name: string;
-}
+import { CategoryModel, FeaturedMovieModel } from 'models';
+import { Movie, ReleaseDates } from 'tmdb/types';
 
 type Props = {
   featuredMovie: Movie;
   releaseDates: ReleaseDates;
-  categories: CategoryType[];
+  categories: CategoryModel[];
 };
 
 export default function BrowsePage({
@@ -33,13 +29,8 @@ export default function BrowsePage({
 
         {/* categories */}
         <Box>
-          {categories.map((category, i) => (
-            <Category
-              key={i}
-              title={category.name}
-              movies={category.results}
-              handleClick={() => null}
-            />
+          {categories.map((category) => (
+            <Category key={category.name} category={category} />
           ))}
         </Box>
       </Box>

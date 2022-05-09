@@ -1,5 +1,12 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
+import { CategoryModel } from 'models';
+import {
+  featuredMovieDummy,
+  releaseDatesDummy,
+  trendingResultDummy,
+} from 'tmdb/dummy';
+
 import BrowsePage from './BrowsePage';
 
 export default {
@@ -12,36 +19,8 @@ export default {
 
 export const Default: ComponentStory<typeof BrowsePage> = () => (
   <BrowsePage
-    featuredMovie={{
-      title: 'the suicide squat',
-      description: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit.',
-      alt: 'the suicide squat',
-      src: '/Netflix_Logo.svg',
-    }}
-    categories={[
-      {
-        name: 'My List',
-        list: [
-          {
-            title: '',
-            description: '',
-            src: '/Netflix_Logo.svg',
-            alt: 'sample',
-          },
-          {
-            title: '',
-            description: '',
-            src: '/Netflix_Logo.svg',
-            alt: 'sample',
-          },
-          {
-            title: '',
-            description: '',
-            src: '/Netflix_Logo.svg',
-            alt: 'sample',
-          },
-        ],
-      },
-    ]}
+    featuredMovie={featuredMovieDummy}
+    releaseDates={releaseDatesDummy}
+    categories={[new CategoryModel('Trending', trendingResultDummy)]}
   />
 );

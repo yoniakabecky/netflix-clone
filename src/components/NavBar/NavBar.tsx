@@ -7,7 +7,6 @@ import Image from 'next/image';
 
 import BellIcon from 'components/uis/Icon/BellIcon';
 import SearchIcon from 'components/uis/Icon/SearchIcon';
-import logo from '../../../public/Netflix_Logo.svg';
 
 export default function NavBar() {
   return (
@@ -29,7 +28,7 @@ export default function NavBar() {
 
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             <Box position={'relative'} width={'6rem'} mr={2}>
-              <Image src={logo} alt={'logo'} layout={'fill'} />
+              <Image src={'/Netflix_Logo.svg'} alt={'logo'} layout={'fill'} />
             </Box>
 
             <Button color={'secondary'} sx={{ fontWeight: 'normal' }}>

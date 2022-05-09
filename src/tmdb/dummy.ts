@@ -1,6 +1,6 @@
-import { Movie, ReleaseDates } from './types';
+import { Movie, MovieList, ReleaseDates } from './types';
 
-export const trendingResultDummy = {
+export const trendingResultDummy: MovieList = {
   page: 1,
   results: [
     {

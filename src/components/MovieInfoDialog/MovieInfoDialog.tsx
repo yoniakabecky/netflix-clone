@@ -12,11 +12,12 @@ import {
 } from 'components/uis/IconButton';
 import LikeButtons from 'components/uis/LikeButtons';
 import { StyledTooltip } from 'components/uis/Tooltip';
+import { FeaturedMovieModel } from 'models';
 
 interface Props extends DialogProps {
   open: boolean;
   onClose: () => void;
-  movie?: any;
+  movie?: FeaturedMovieModel;
 }
 
 export default function MovieInfoDialog({ open, onClose, ...props }: Props) {

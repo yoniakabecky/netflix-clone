@@ -71,6 +71,16 @@ export type MovieListResult = {
   popularity: number;
 };
 
+export type MovieListResultAlt = {
+  id: number;
+  original_name?: string;
+  origin_country?: Array<string>;
+  original_language?: string;
+  first_air_date?: string;
+  name?: string;
+  media_type?: string;
+};
+
 export type ReleaseDates = {
   id: number;
   results: Array<ReleaseDatesResults>;
@@ -97,9 +107,9 @@ export type Status =
   | 'Released'
   | 'Canceled';
 
-export type Trending = {
+export type MovieList = {
   page: number;
-  results: Array<MovieListResult>;
+  results: Array<MovieListResult | MovieListResultAlt>;
   total_pages: number;
   total_results: number;
 };
