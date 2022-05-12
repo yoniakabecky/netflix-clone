@@ -61,7 +61,7 @@ export default function FeaturedMovie({ movie }: Props) {
               mb={4}
               width={'40%'}
               sx={{
-                color: 'secondary.main',
+                color: 'common.white',
                 textShadow: '0.25rem 0.25rem 0.5rem rgba(0, 0, 0, 0.25)',
               }}
             >

@@ -17,9 +17,9 @@ export default function Thumbnail({ imgProps, sx, ...props }: Props) {
     <Card
       sx={{
         flexShrink: 0,
-        width: '16vw',
+        width: '14vw',
         maxWidth: 320,
-        height: '9vw',
+        height: '7.875vw',
         maxHeight: 180,
         ...sx,
       }}

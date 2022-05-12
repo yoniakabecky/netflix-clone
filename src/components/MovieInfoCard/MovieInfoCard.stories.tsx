@@ -1,5 +1,8 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
+import { MovieModel } from 'models';
+import { featuredMovieDummy, releaseDatesDummy } from 'tmdb/dummy';
+
 import MovieInfoCard from './MovieInfoCard';
 
 export default {
@@ -9,6 +12,6 @@ export default {
 
 export const Default: ComponentStory<typeof MovieInfoCard> = () => (
   <MovieInfoCard
-    movie={{ title: 'category name', src: '/Netflix_Logo.svg', alt: 'sample' }}
+    movie={new MovieModel(featuredMovieDummy, releaseDatesDummy)}
   />
 );
