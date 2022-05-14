@@ -2,10 +2,9 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
+import PopperThumbnail from 'components/PopperThumbnail';
 import ChevronDownIcon from 'components/uis/Icon/ChevronDownIcon';
-import { Thumbnail } from 'components/uis/Thumbnail';
 import { CategoryModel } from 'models';
-import { smallImgLoader } from 'utils/imgLoader';
 
 type Props = {
   category: CategoryModel;
@@ -56,16 +55,9 @@ export default function Category({ category }: Props) {
 
       <Stack direction={'row'} spacing={2} overflow={'auto'} px={'5%'}>
         {results.map(
-          (movie, i) =>
+          (movie) =>
             movie.backdropPath && (
-              <Thumbnail
-                imgProps={{
-                  src: movie.backdropPath,
-                  alt: movie.title,
-                  loader: smallImgLoader,
-                }}
-                key={i}
-              />
+              <PopperThumbnail movie={movie} key={movie.id} />
             )
         )}
       </Stack>

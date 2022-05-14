@@ -2,23 +2,24 @@ import Dialog, { DialogProps } from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import Grid from '@mui/material/Grid';
 
+import PopperThumbnail from 'components/PopperThumbnail';
 import { CloseButton } from 'components/uis/IconButton';
-import { Thumbnail } from 'components/uis/Thumbnail';
+import { CategoryModel } from 'models';
 
 interface Props extends DialogProps {
   open: boolean;
   onClose: () => void;
-  categoryTitle: string;
-  list: any[];
+  category: CategoryModel;
 }
 
 export default function MovieListDialog({
   open,
   onClose,
-  categoryTitle,
-  list,
+  category,
   ...props
 }: Props) {
+  const { name, results: list } = category;
+
   return (
     <Dialog maxWidth={'lg'} fullWidth open={open} onClose={onClose} {...props}>
       <CloseButton
@@ -34,19 +35,19 @@ export default function MovieListDialog({
 
       {/* title */}
       <DialogTitle sx={{ fontSize: '2rem', textAlign: 'center', my: '3rem' }}>
-        {categoryTitle}
+        {name}
       </DialogTitle>
 
       {/* movie grid */}
       <Grid
         container
         rowSpacing={7}
-        columnSpacing={1}
+        columnSpacing={2}
         sx={{ width: '90%', mx: 'auto', mb: 4 }}
       >
-        {list.map((movie, i) => (
-          <Grid item key={i}>
-            <Thumbnail imgProps={{ src: movie.src, alt: movie.alt }} />
+        {list.map((movie) => (
+          <Grid item key={movie.id}>
+            <PopperThumbnail movie={movie} sx={{ width: '20%' }} />
           </Grid>
         ))}
       </Grid>

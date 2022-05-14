@@ -1,30 +1,34 @@
 import { Genre, Movie, ReleaseDates, ReleaseDatesResults } from 'tmdb/types';
 
 export class MovieModel {
-  backdropPath: string | null;
   id: number;
-  originalTitle: string;
-  overview: string | null;
-  popularity: number;
+  backdropPath: string | null;
+  posterPath: string | null;
   title: string;
+  overview: string | null;
+  originalTitle: string;
+  popularity: number;
   video: boolean;
   releaseDatesResult: Array<ReleaseDatesResults>;
-  posterPath: string | null;
   genres: Array<Genre>;
   runtime: number;
 
-  constructor(movie: Movie, releaseDates: ReleaseDates) {
-    this.id = movie.id;
-    this.backdropPath = movie.backdrop_path;
-    this.posterPath = movie.poster_path;
-    this.title = movie.title;
-    this.originalTitle = movie.original_title;
-    this.overview = movie.overview;
-    this.popularity = movie.popularity;
-    this.video = movie.video;
-    this.releaseDatesResult = releaseDates?.results;
-    this.genres = movie.genres;
-    this.runtime = movie.runtime;
+  constructor(movie: Movie | null, releaseDates: ReleaseDates | null) {
+    this.id = movie?.id ?? 0;
+    this.backdropPath = movie?.backdrop_path ?? null;
+    this.posterPath = movie?.poster_path ?? null;
+    this.title = movie?.title ?? '';
+    this.originalTitle = movie?.original_title ?? '';
+    this.overview = movie?.overview ?? '';
+    this.popularity = movie?.popularity ?? 0;
+    this.video = movie?.video ?? false;
+    this.releaseDatesResult = releaseDates?.results ?? [];
+    this.genres = movie?.genres ?? [];
+    this.runtime = movie?.runtime ?? 0;
+  }
+
+  get hasData() {
+    return this.id !== 0;
   }
 
   get usRating() {
@@ -36,6 +40,8 @@ export class MovieModel {
   }
 
   get formatRuntime() {
+    if (this.runtime <= 0) return '';
+
     const hour = Math.floor(this.runtime / 60);
     const min = this.runtime % 60;
 

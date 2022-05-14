@@ -48,7 +48,7 @@ export default function LikeButtons(props: Props) {
               borderRadius={6}
               py={0.5}
               px={1}
-              width={'8rem'}
+              width={'7rem'}
             >
               <StyledTooltip title={'Not for me'}>
                 <Box>

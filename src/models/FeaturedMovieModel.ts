@@ -14,10 +14,10 @@ export class FeaturedMovieModel {
     this.id = movie.id;
     this.backdropPath = movie.backdrop_path;
     this.title = movie.title;
-    this.originalTitle = movie.original_title;
+    this.originalTitle = movie.original_title ?? '';
     this.overview = movie.overview;
-    this.popularity = movie.popularity;
-    this.video = movie.video;
+    this.popularity = movie.popularity ?? 0;
+    this.video = movie.video ?? false;
     this.releaseDatesResult = releaseDates?.results;
   }
 

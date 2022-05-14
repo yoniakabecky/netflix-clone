@@ -3,6 +3,9 @@ import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
+import { CategoryModel } from 'models';
+import { trendingResultDummy } from 'tmdb/dummy';
+
 import MovieListDialog from './MovieListDialog';
 
 export default {
@@ -27,14 +30,7 @@ export const Default: ComponentStory<typeof MovieListDialog> = () => {
       <MovieListDialog
         open={open}
         onClose={handleClose}
-        categoryTitle={'Category Title'}
-        list={[
-          { src: '/Netflix_Logo.svg', alt: 'sample' },
-          { src: '/Netflix_Logo.svg', alt: 'sample' },
-          { src: '/Netflix_Logo.svg', alt: 'sample' },
-          { src: '/Netflix_Logo.svg', alt: 'sample' },
-          { src: '/Netflix_Logo.svg', alt: 'sample' },
-        ]}
+        category={new CategoryModel('Category Name', trendingResultDummy)}
       />
     </>
   );

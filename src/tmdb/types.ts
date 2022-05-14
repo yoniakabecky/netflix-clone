@@ -27,48 +27,48 @@ export type Language = {
 };
 
 export type Movie = {
-  adult: boolean;
+  adult?: boolean;
   backdrop_path: string | null;
   belongs_to_collection: null | {};
-  budget: number;
+  budget?: number;
   genres: Array<Genre>;
   homepage: string | null;
   id: number;
   imdb_id: string | null;
-  original_language: string;
-  original_title: string;
+  original_language?: string;
+  original_title?: string;
   overview: string | null;
-  popularity: number;
+  popularity?: number;
   poster_path: string | null;
   production_companies: Array<Company>;
   production_countries: Array<Country>;
-  release_date: string;
-  revenue: number;
-  runtime: number;
+  release_date?: string;
+  revenue?: number;
+  runtime?: number;
   spoken_languages: Array<Language>;
   status: Status;
   tagline: string | null;
   title: string;
-  video: boolean;
-  vote_average: number;
-  vote_count: number;
+  video?: boolean;
+  vote_average?: number;
+  vote_count?: number;
 };
 
 export type MovieListResult = {
-  adult: boolean;
+  adult?: boolean;
   backdrop_path: string | null;
   genre_ids: Array<number>;
   id: number;
-  original_language: string;
-  original_title: string;
+  original_language?: string;
+  original_title?: string;
   overview: string;
   poster_path: string | null;
-  release_date: string;
+  release_date?: string;
   title: string;
-  video: boolean;
-  vote_average: number;
-  vote_count: number;
-  popularity: number;
+  video?: boolean;
+  vote_average?: number;
+  vote_count?: number;
+  popularity?: number;
 };
 
 export type MovieListResultAlt = {

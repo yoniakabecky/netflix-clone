@@ -1,7 +1,6 @@
 import Box from '@mui/material/Box';
 import Card, { CardProps } from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-// import CardMedia from '@mui/material/CardMedia';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Image from 'next/image';
@@ -11,21 +10,25 @@ import ChevronDownIcon from 'components/uis/Icon/ChevronDownIcon';
 import { PlayIconButton, StyledIconButton } from 'components/uis/IconButton';
 import LikeButtons from 'components/uis/LikeButtons';
 import { StyledTooltip } from 'components/uis/Tooltip';
-import { MovieModel } from 'models';
+import { MovieListModel, MovieModel } from 'models';
 import { smallImgLoader } from 'utils/imgLoader';
 
 interface Props extends CardProps {
-  movie: MovieModel;
+  movie: MovieModel | MovieListModel;
+  anchorEl?: null | Element;
 }
 
-export default function MovieInfoCard({ movie }: Props) {
+export default function MovieInfoCard({ movie, ...props }: Props) {
   // TODO: handle likes
-  const handleDislike = () => {};
-  const handleLike = () => {};
-  const handleLove = () => {};
+  const handleDislike = () => null;
+  const handleLike = () => null;
+  const handleLove = () => null;
+
+  //TODO: fetch movie details
+  const details = new MovieModel(null, null);
 
   return (
-    <Card sx={{ width: '22vw', minWidth: 352 }}>
+    <Card sx={{ width: '22vw', minWidth: 352 }} {...props}>
       {movie.backdropPath && (
         <Box
           position={'relative'}
@@ -76,33 +79,38 @@ export default function MovieInfoCard({ movie }: Props) {
           <Typography variant={'subtitle1'} component={'span'}>
             {movie.title}
           </Typography>
-          <Typography
-            variant={'caption'}
-            color={'textSecondary'}
-            sx={{ ml: 1 }}
-          >
-            {movie.formatRuntime}
-          </Typography>
+
+          {details && (
+            <Typography
+              variant={'caption'}
+              color={'textSecondary'}
+              sx={{ ml: 1 }}
+            >
+              {details.formatRuntime}
+            </Typography>
+          )}
         </Box>
 
-        <Box display={'flex'} mt={1}>
-          {movie.genres.map((genre, i) => (
-            <Box key={i}>
-              <Typography variant={'caption'} color={'textSecondary'}>
-                {genre.name}
-              </Typography>
-              {movie.genres.length - 1 !== i && (
-                <Typography
-                  variant={'caption'}
-                  color={'textSecondary'}
-                  sx={{ mx: 1 }}
-                >
-                  /
+        {details && (
+          <Box display={'flex'} mt={1}>
+            {details.genres.map((genre, i) => (
+              <Box key={i}>
+                <Typography variant={'caption'} color={'textSecondary'}>
+                  {genre.name}
                 </Typography>
-              )}
-            </Box>
-          ))}
-        </Box>
+                {details.genres.length - 1 !== i && (
+                  <Typography
+                    variant={'caption'}
+                    color={'textSecondary'}
+                    sx={{ mx: 1 }}
+                  >
+                    /
+                  </Typography>
+                )}
+              </Box>
+            ))}
+          </Box>
+        )}
       </CardContent>
     </Card>
   );
