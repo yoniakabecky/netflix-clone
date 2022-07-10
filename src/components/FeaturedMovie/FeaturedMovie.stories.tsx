@@ -2,7 +2,7 @@ import React from 'react';
 
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import { FeaturedMovieModel } from 'models';
+import { MovieModel } from 'models';
 import { featuredMovieDummy, releaseDatesDummy } from 'tmdb/dummy';
 
 import FeaturedMovie from './FeaturedMovie';
@@ -17,6 +17,6 @@ export default {
 
 export const Default: ComponentStory<typeof FeaturedMovie> = () => (
   <FeaturedMovie
-    movie={new FeaturedMovieModel(featuredMovieDummy, releaseDatesDummy)}
+    movie={new MovieModel(featuredMovieDummy, releaseDatesDummy)}
   />
 );

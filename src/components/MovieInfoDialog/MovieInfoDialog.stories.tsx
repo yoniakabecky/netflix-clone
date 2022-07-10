@@ -3,6 +3,9 @@ import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
+import { MovieModel } from 'models';
+import { featuredMovieDummy, releaseDatesDummy } from 'tmdb/dummy';
+
 import MovieInfoDialog from './MovieInfoDialog';
 
 export default {
@@ -24,7 +27,11 @@ export const Default: ComponentStory<typeof MovieInfoDialog> = () => {
   return (
     <>
       <Button onClick={handleClickOpen}>Open dialog</Button>
-      <MovieInfoDialog open={open} onClose={handleClose} />
+      <MovieInfoDialog
+        open={open}
+        onClose={handleClose}
+        movie={new MovieModel(featuredMovieDummy, releaseDatesDummy)}
+      />
     </>
   );
 };

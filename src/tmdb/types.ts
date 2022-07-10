@@ -3,6 +3,21 @@ export type ApiError = {
   status_code: number;
 };
 
+export type Cast = {
+  adult?: boolean;
+  gender?: number;
+  id: number;
+  known_for_department?: string;
+  name?: string;
+  original_name?: string;
+  popularity?: number;
+  profile_path?: string;
+  cast_id?: number;
+  character?: string;
+  credit_id?: string;
+  order?: number;
+};
+
 export type Company = {
   name: string;
   id: number;
@@ -15,6 +30,26 @@ export type Country = {
   name: string;
 };
 
+export type Credit = {
+  id: number;
+  cast?: Array<Cast>;
+  crew?: Array<Crew>;
+};
+
+export type Crew = {
+  adult?: boolean;
+  gender?: number;
+  id: number;
+  known_for_department?: string;
+  name?: string;
+  original_name?: string;
+  popularity?: number;
+  profile_path?: string;
+  credit_id?: string;
+  department?: string;
+  job?: string;
+};
+
 export type Genre = {
   id: number;
   name: string;
@@ -24,6 +59,12 @@ export type Language = {
   iso_639_1: string;
   name: string;
   english_name: string;
+};
+
+export type List = {
+  page: number;
+  total_pages: number;
+  total_results: number;
 };
 
 export type Movie = {
@@ -52,6 +93,10 @@ export type Movie = {
   video?: boolean;
   vote_average?: number;
   vote_count?: number;
+};
+
+export type MovieList = List & {
+  results: Array<MovieListResult | MovieListResultAlt>;
 };
 
 export type MovieListResult = {
@@ -106,10 +151,3 @@ export type Status =
   | 'Post Production'
   | 'Released'
   | 'Canceled';
-
-export type MovieList = {
-  page: number;
-  results: Array<MovieListResult | MovieListResultAlt>;
-  total_pages: number;
-  total_results: number;
-};

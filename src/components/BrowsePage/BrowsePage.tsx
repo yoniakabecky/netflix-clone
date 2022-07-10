@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Category from 'components/Category';
 import FeaturedMovie from 'components/FeaturedMovie';
 import NavBar from 'components/NavBar';
-import { CategoryModel, FeaturedMovieModel } from 'models';
+import { CategoryModel, MovieModel } from 'models';
 import { Movie, ReleaseDates } from 'tmdb/types';
 
 type Props = {
@@ -17,7 +17,7 @@ export default function BrowsePage({
   releaseDates,
   categories,
 }: Props) {
-  const mainMovie = new FeaturedMovieModel(featuredMovie, releaseDates);
+  const mainMovie = new MovieModel(featuredMovie, releaseDates);
 
   return (
     <>
@@ -34,6 +34,9 @@ export default function BrowsePage({
           ))}
         </Box>
       </Box>
+
+      {/* TODO: footer */}
+      <Box height={200} />
     </>
   );
 }

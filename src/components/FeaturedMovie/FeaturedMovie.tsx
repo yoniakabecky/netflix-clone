@@ -3,17 +3,16 @@ import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import Image from 'next/image';
 
 import MovieInfoDialog from 'components/MovieInfoDialog';
 import { MoreInfoButton, PlayButton } from 'components/uis/Button';
 import { MuteButton } from 'components/uis/IconButton';
+import MainImage from 'components/uis/MainImage';
 import { RatingTag } from 'components/uis/Tag';
-import { FeaturedMovieModel } from 'models';
-import { originalImgLoader } from 'utils/imgLoader';
+import { MovieModel } from 'models';
 
 type Props = {
-  movie: FeaturedMovieModel;
+  movie: MovieModel;
 };
 
 export default function FeaturedMovie({ movie }: Props) {
@@ -25,38 +24,14 @@ export default function FeaturedMovie({ movie }: Props) {
   return (
     <>
       <Box component={'section'}>
-        <Box
-          position={'relative'}
-          width={'100%'}
-          height={'100vh'}
-          mx={'auto'}
-          sx={{
-            background:
-              'linear-gradient(180deg, rgba(20, 20, 20, 0) 50%, rgba(20, 20, 20, 0.4) 75%, #141414 100%)',
-          }}
-        >
+        <MainImage backdropPath={movie.backdropPath} title={movie.title}>
           <Box
             position={'absolute'}
-            top={0}
-            right={0}
-            bottom={0}
-            left={0}
-            width={'100%'}
-            height={'100%'}
-            zIndex={-1}
+            bottom={'20vh'}
+            width={'95%'}
+            ml={'5%'}
+            zIndex={'modal'}
           >
-            {movie.backdropPath && (
-              <Image
-                loader={originalImgLoader}
-                src={movie.backdropPath}
-                alt={movie.title}
-                layout={'fill'}
-                objectFit={'cover'}
-              />
-            )}
-          </Box>
-
-          <Box position={'absolute'} bottom={'20vh'} width={'95%'} ml={'5%'}>
             <Box
               mb={4}
               width={'40%'}
@@ -96,7 +71,7 @@ export default function FeaturedMovie({ movie }: Props) {
               </Stack>
             </Box>
           </Box>
-        </Box>
+        </MainImage>
       </Box>
 
       <MovieInfoDialog

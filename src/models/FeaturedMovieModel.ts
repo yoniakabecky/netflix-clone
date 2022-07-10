@@ -18,6 +18,7 @@ export class FeaturedMovieModel {
     this.overview = movie.overview;
     this.popularity = movie.popularity ?? 0;
     this.video = movie.video ?? false;
+
     this.releaseDatesResult = releaseDates?.results;
   }
 

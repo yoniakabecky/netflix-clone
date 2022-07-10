@@ -39,15 +39,10 @@ export default function MovieListDialog({
       </DialogTitle>
 
       {/* movie grid */}
-      <Grid
-        container
-        rowSpacing={7}
-        columnSpacing={2}
-        sx={{ width: '90%', mx: 'auto', mb: 4 }}
-      >
+      <Grid container rowSpacing={7} sx={{ width: '90%', mx: 'auto', mb: 4 }}>
         {list.map((movie) => (
-          <Grid item key={movie.id}>
-            <PopperThumbnail movie={movie} sx={{ width: '20%' }} />
+          <Grid item key={movie.id} sx={{ width: '20%' }}>
+            <PopperThumbnail movie={movie} />
           </Grid>
         ))}
       </Grid>

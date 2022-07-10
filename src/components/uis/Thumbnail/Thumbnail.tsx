@@ -21,6 +21,7 @@ export default function Thumbnail({ imgProps, sx, ...props }: Props) {
         maxWidth: 320,
         height: '7.875vw',
         maxHeight: 180,
+        cursor: 'pointer',
         ...sx,
       }}
       {...props}

@@ -20,5 +20,12 @@ export const theme = createTheme({
         },
       },
     },
+    MuiDialog: {
+      styleOverrides: {
+        paper: {
+          background: '#141414',
+        },
+      },
+    },
   },
 });

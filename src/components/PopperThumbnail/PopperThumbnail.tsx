@@ -22,8 +22,11 @@ export default function PopperThumbnail({ movie, ...props }: Props) {
 
   const handleMouseEnter = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
-    setOpen(true);
+    setTimeout(() => {
+      setOpen(true);
+    }, 1000);
   };
+
   const handleClickAway = () => {
     setAnchorEl(null);
     setOpen(false);

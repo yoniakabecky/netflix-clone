@@ -9,6 +9,7 @@ export class MovieModel {
   originalTitle: string;
   popularity: number;
   video: boolean;
+  releaseDate: string;
   releaseDatesResult: Array<ReleaseDatesResults>;
   genres: Array<Genre>;
   runtime: number;
@@ -22,6 +23,7 @@ export class MovieModel {
     this.overview = movie?.overview ?? '';
     this.popularity = movie?.popularity ?? 0;
     this.video = movie?.video ?? false;
+    this.releaseDate = movie?.release_date ?? '';
     this.releaseDatesResult = releaseDates?.results ?? [];
     this.genres = movie?.genres ?? [];
     this.runtime = movie?.runtime ?? 0;
@@ -46,5 +48,18 @@ export class MovieModel {
     const min = this.runtime % 60;
 
     return hour > 0 ? `${hour}h ${min}m` : `${min}m`;
+  }
+
+  get releaseYear() {
+    if (this.releaseDate === '') return '';
+
+    const splittedDate = this.releaseDate.split('-');
+    return splittedDate[0];
+  }
+
+  get genreNames() {
+    if (this.genres.length <= 0) return [];
+
+    return this.genres.map((genre) => genre.name);
   }
 }
