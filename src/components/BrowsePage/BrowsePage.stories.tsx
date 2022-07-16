@@ -1,4 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { RecoilRoot } from 'recoil';
 
 import { CategoryModel } from 'models';
 import {
@@ -15,6 +16,13 @@ export default {
   parameters: {
     backgrounds: { default: 'dark' },
   },
+  decorators: [
+    (Story) => (
+      <RecoilRoot>
+        <Story />
+      </RecoilRoot>
+    ),
+  ],
 } as ComponentMeta<typeof BrowsePage>;
 
 export const Default: ComponentStory<typeof BrowsePage> = () => (

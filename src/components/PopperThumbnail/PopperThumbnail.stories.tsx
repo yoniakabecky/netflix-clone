@@ -1,5 +1,6 @@
 import { Box } from '@mui/material';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { RecoilRoot } from 'recoil';
 
 import { MovieListModel } from 'models';
 import { trendingResultDummy } from 'tmdb/dummy';
@@ -10,6 +11,13 @@ import PopperThumbnail from './PopperThumbnail';
 export default {
   title: 'PopperThumbnail',
   component: PopperThumbnail,
+  decorators: [
+    (Story) => (
+      <RecoilRoot>
+        <Story />
+      </RecoilRoot>
+    ),
+  ],
 } as ComponentMeta<typeof PopperThumbnail>;
 
 export const Default: ComponentStory<typeof PopperThumbnail> = () => (

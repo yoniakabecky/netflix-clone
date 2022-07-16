@@ -26,11 +26,13 @@ specifiers:
   eslint-import-resolver-typescript: ^2.7.1
   eslint-plugin-import: ^2.26.0
   eslint-plugin-storybook: ^0.5.11
+  nanoid: ^4.0.0
   next: 12.1.5
   path: ^0.12.7
   prettier: ^2.6.2
   react: 18.1.0
   react-dom: 18.1.0
+  recoil: ^0.7.4
   tsconfig-paths-webpack-plugin: ^3.5.2
   typescript: 4.6.4
   webpack: ^5.72.0
@@ -42,10 +44,12 @@ dependencies:
   '@emotion/styled': 11.8.1_ioymb7v4ywp452rgp3jcqjbqsy
   '@mui/material': 5.6.3_jeuaqv6awanfmmqq4rub4k656u
   axios: 0.27.2
+  nanoid: 4.0.0
   next: 12.1.5_aandee56mam3mbdnvxoybr464e
   path: 0.12.7
   react: 18.1.0
   react-dom: 18.1.0_react@18.1.0
+  recoil: 0.7.4_ef5jwxihqo6n7gxfmzogljlgcm
 
 devDependencies:
   '@babel/core': 7.17.9
@@ -7377,6 +7381,10 @@ packages:
     resolution: {integrity: sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==}
     dev: true
 
+  /hamt_plus/1.0.2:
+    resolution: {integrity: sha512-t2JXKaehnMb9paaYA7J0BX8QQAY8lwfQ9Gjf4pg/mk4krt+cmwmU652HOoWonf+7+EQV97ARPMhhVgU1ra2GhA==}
+    dev: false
+
   /handlebars/4.7.7:
     resolution: {integrity: sha512-aAcXm5OAfE/8IXkcZvCepKU3VzW1/39Fb5ZuqMtgI/hT8X2YgoMvBY5dLhq/cpOvw7Lk1nK/UF71aLG/ZnVYRA==}
     engines: {node: '>=0.4.7'}
@@ -8888,6 +8896,12 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
+  /nanoid/4.0.0:
+    resolution: {integrity: sha512-IgBP8piMxe/gf73RTQx7hmnhwz0aaEXYakvqZyE302IXW3HyVNhdNGC+O2MwMAVhLEnvXlvKtGbtJf6wvHihCg==}
+    engines: {node: ^14 || ^16 || >=18}
+    hasBin: true
+    dev: false
+
   /nanomatch/1.2.13:
     resolution: {integrity: sha512-fpoe2T0RbHwBTBUOftAfBPaDEi06ufaUai0mE6Yn1kacc3SnTErfb/h+X94VXzI64rKFHYImXSvdwGGCmwOqCA==}
     engines: {node: '>=0.10.0'}
@@ -10182,6 +10196,23 @@ packages:
     dependencies:
       picomatch: 2.3.1
     dev: true
+
+  /recoil/0.7.4_ef5jwxihqo6n7gxfmzogljlgcm:
+    resolution: {integrity: sha512-sCXvQGMfSprkNU4ZRkJV4B0qFQSURJMgsICqY1952WRlg66NMwYqi6n67vhnhn0qw4zHU1gHXJuMvRDaiRNFZw==}
+    peerDependencies:
+      react: '>=16.13.1'
+      react-dom: '*'
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      hamt_plus: 1.0.2
+      react: 18.1.0
+      react-dom: 18.1.0_react@18.1.0
+    dev: false
 
   /refractor/3.6.0:
     resolution: {integrity: sha512-MY9W41IOWxxk31o+YvFCNyNzdkc9M20NoZK5vq6jkv4I/uh2zkWcfudj0Q1fovjUQJrNewS9NMzeTtqPf+n5EA==}

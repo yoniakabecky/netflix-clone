@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 
 import { Box, BoxProps, Fade, Popper } from '@mui/material';
 
 import MovieInfoCard from 'components/MovieInfoCard';
 import { Thumbnail } from 'components/uis/Thumbnail';
 import { MovieListModel } from 'models';
+import { usePopperState } from 'recoils/popper';
 import { smallImgLoader } from 'utils/imgLoader';
 
 interface Props extends BoxProps {
@@ -12,28 +13,47 @@ interface Props extends BoxProps {
 }
 
 export default function PopperThumbnail({ movie, ...props }: Props) {
-  const [open, setOpen] = useState(false);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const {
+    popperState: { isOpen, currentPopperTitle, anchorEl },
+    open,
+    close,
+  } = usePopperState();
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(anchorEl ? null : event.currentTarget);
-    setOpen((previousOpen) => !previousOpen);
-  };
+  const ref = useRef<HTMLDivElement | null>(null);
 
-  const handleMouseEnter = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-    setTimeout(() => {
-      setOpen(true);
-    }, 1000);
-  };
+  const isCurrentlyOpen = useMemo(
+    () => movie.title === currentPopperTitle && isOpen,
+    [movie.title, currentPopperTitle, isOpen]
+  );
 
-  const handleClickAway = () => {
-    setAnchorEl(null);
-    setOpen(false);
-  };
+  const popperId = useMemo(
+    () => (isCurrentlyOpen ? `popper-${movie.id}` : undefined),
+    [movie.id, isCurrentlyOpen]
+  );
 
-  const canBeOpen = Boolean(anchorEl);
-  const id = canBeOpen ? `popper-${movie.id}` : undefined;
+  const handleClick = useCallback(
+    (event: React.MouseEvent<HTMLDivElement>) =>
+      isOpen ? open(movie.title, event.currentTarget) : close(),
+    [movie.title, isOpen, open, close]
+  );
+
+  const delayPopper = () =>
+    new Promise((resolve) => {
+      setTimeout(resolve, 1000);
+    });
+
+  const handleMouseEnter = useCallback(
+    async (event: React.MouseEvent<HTMLDivElement>) => {
+      if (isCurrentlyOpen) return;
+      ref.current = event.currentTarget;
+
+      await delayPopper();
+      ref.current && open(movie.title, ref.current);
+    },
+    [movie.title, open, isCurrentlyOpen]
+  );
+
+  const handleMouseLeave = () => (ref.current = null);
 
   if (!movie.backdropPath) return <div />;
 
@@ -47,11 +67,13 @@ export default function PopperThumbnail({ movie, ...props }: Props) {
         }}
         onClick={handleClick}
         onMouseEnter={handleMouseEnter}
-        aria-describedby={id}
+        onMouseLeave={handleMouseLeave}
+        aria-describedby={popperId}
+        ref={ref}
       />
       <Popper
-        id={id}
-        open={open}
+        id={popperId}
+        open={isCurrentlyOpen}
         anchorEl={anchorEl}
         transition
         sx={{ zIndex: 'tooltip' }}
@@ -62,9 +84,9 @@ export default function PopperThumbnail({ movie, ...props }: Props) {
               position={'absolute'}
               top={'-10vw'}
               left={'-10vw'}
-              onMouseLeave={handleClickAway}
+              onMouseLeave={close}
             >
-              {open && <MovieInfoCard movie={movie} />}
+              {isOpen && <MovieInfoCard movie={movie} />}
             </Box>
           </Fade>
         )}

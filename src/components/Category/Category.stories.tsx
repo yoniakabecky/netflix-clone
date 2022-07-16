@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { RecoilRoot } from 'recoil';
 
 import { CategoryModel } from 'models';
 import { trendingResultDummy } from 'tmdb/dummy';
@@ -13,6 +14,13 @@ export default {
   parameters: {
     backgrounds: { default: 'dark' },
   },
+  decorators: [
+    (Story) => (
+      <RecoilRoot>
+        <Story />
+      </RecoilRoot>
+    ),
+  ],
 } as ComponentMeta<typeof Category>;
 
 const Template: ComponentStory<typeof Category> = (args) => (
