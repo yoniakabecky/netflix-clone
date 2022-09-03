@@ -1,5 +1,4 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { RecoilRoot } from 'recoil';
 
 import { CategoryModel } from 'models';
 import { FeaturedMovieModel, getUsRating } from 'models/FeaturedMovieModel';
@@ -17,13 +16,6 @@ export default {
   parameters: {
     backgrounds: { default: 'dark' },
   },
-  decorators: [
-    (Story) => (
-      <RecoilRoot>
-        <Story />
-      </RecoilRoot>
-    ),
-  ],
 } as ComponentMeta<typeof BrowsePage>;
 
 const featured: FeaturedMovieModel = {

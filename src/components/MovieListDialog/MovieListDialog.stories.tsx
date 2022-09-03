@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import Button from '@mui/material/Button';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { RecoilRoot } from 'recoil';
 
 import { CategoryModel } from 'models';
 import { trendingResultDummy } from 'tmdb/dummy';
@@ -12,13 +11,6 @@ import MovieListDialog from './MovieListDialog';
 export default {
   title: 'MovieListDialog',
   component: MovieListDialog,
-  decorators: [
-    (Story) => (
-      <RecoilRoot>
-        <Story />
-      </RecoilRoot>
-    ),
-  ],
 } as ComponentMeta<typeof MovieListDialog>;
 
 export const Default: ComponentStory<typeof MovieListDialog> = () => {
