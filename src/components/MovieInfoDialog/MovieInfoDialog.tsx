@@ -16,7 +16,7 @@ import LikeButtons from 'components/uis/LikeButtons';
 import MainImage from 'components/uis/MainImage';
 import { StyledTooltip } from 'components/uis/Tooltip';
 import { MovieModel } from 'models';
-import { CreditModel } from 'models/CreditModel';
+import { parseCreditResponse } from 'models/CreditModel';
 import { creditsDummy, similarDummy } from 'tmdb/dummy';
 import { Movie } from 'tmdb/types';
 
@@ -38,7 +38,7 @@ export default function MovieInfoDialog({
   const handleLove = () => {};
 
   // TODO: fetch additional data
-  const credits = new CreditModel(creditsDummy);
+  const credits = parseCreditResponse(creditsDummy);
 
   // TODO: fetch similar movies
   const similar = similarDummy.results.map(
