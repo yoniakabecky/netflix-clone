@@ -1,32 +1,29 @@
-import { Movie, ReleaseDates, ReleaseDatesResults } from 'tmdb/types';
+import { ReleaseDates, ReleaseDatesResults, Trending } from 'tmdb/types';
 
-export class FeaturedMovieModel {
+export type FeaturedMovieModel = {
+  movieId: number;
   backdropPath: string | null;
-  id: number;
-  originalTitle: string;
-  overview: string | null;
-  popularity: number;
   title: string;
-  video: boolean;
-  releaseDatesResult: Array<ReleaseDatesResults>;
+  overview: string;
+  usRating: string | null;
+};
 
-  constructor(movie: Movie, releaseDates: ReleaseDates) {
-    this.id = movie.id;
-    this.backdropPath = movie.backdrop_path;
-    this.title = movie.title;
-    this.originalTitle = movie.original_title ?? '';
-    this.overview = movie.overview;
-    this.popularity = movie.popularity ?? 0;
-    this.video = movie.video ?? false;
+export const parseTrendingAndReleaseDate = (
+  trending: Trending,
+  releaseDate?: ReleaseDates
+): FeaturedMovieModel => {
+  const { id, backdrop_path, title, overview } = trending.results[0];
+  const usRating = getUsRating(releaseDate?.results ?? []);
 
-    this.releaseDatesResult = releaseDates?.results;
-  }
+  return {
+    movieId: id,
+    backdropPath: backdrop_path,
+    title,
+    overview,
+    usRating,
+  };
+};
 
-  get usRating() {
-    const usData = this.releaseDatesResult.find((x) => x.iso_3166_1 === 'US');
-
-    if (!usData || usData.release_dates.length <= 0) return null;
-
-    return usData.release_dates[0].certification;
-  }
-}
+export const getUsRating = (results: ReleaseDatesResults[]) =>
+  results.find((x) => x.iso_3166_1 === 'US')?.release_dates[0]?.certification ??
+  null;

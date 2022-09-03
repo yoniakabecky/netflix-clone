@@ -9,10 +9,11 @@ import { MoreInfoButton, PlayButton } from 'components/uis/Button';
 import { MuteButton } from 'components/uis/IconButton';
 import MainImage from 'components/uis/MainImage';
 import { RatingTag } from 'components/uis/Tag';
+import type { FeaturedMovieModel } from 'models';
 import { MovieModel } from 'models';
 
 type Props = {
-  movie: MovieModel;
+  movie: FeaturedMovieModel;
 };
 
 export default function FeaturedMovie({ movie }: Props) {
@@ -52,7 +53,8 @@ export default function FeaturedMovie({ movie }: Props) {
               <Stack direction={'row'} spacing={2} flexGrow={1}>
                 <PlayButton />
 
-                <MoreInfoButton onClick={handleOpenInfo} />
+                {/* TODO: activate button */}
+                <MoreInfoButton onClick={handleOpenInfo} disabled />
               </Stack>
 
               <Stack
@@ -77,7 +79,7 @@ export default function FeaturedMovie({ movie }: Props) {
       <MovieInfoDialog
         open={openInfo}
         onClose={handleCloseInfo}
-        movie={movie}
+        movie={new MovieModel(null, null)}
       />
     </>
   );

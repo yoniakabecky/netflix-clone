@@ -151,3 +151,7 @@ export type Status =
   | 'Post Production'
   | 'Released'
   | 'Canceled';
+
+export type Trending = List & {
+  results: Array<MovieListResult>;
+};
