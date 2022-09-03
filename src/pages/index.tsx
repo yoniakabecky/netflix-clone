@@ -3,13 +3,12 @@ import Head from 'next/head';
 
 import BrowsePage from 'components/BrowsePage';
 import { CategoryModel } from 'models';
-import {
-  featuredMovieDummy,
-  releaseDatesDummy,
-  trendingResultDummy,
-} from 'tmdb/dummy';
+import { useFeaturedMovieState } from 'recoils/featuredMovie';
+import { trendingResultDummy } from 'tmdb/dummy';
 
 const Home: NextPage = () => {
+  const { featuredMovie } = useFeaturedMovieState();
+
   return (
     <div>
       <Head>
@@ -20,8 +19,7 @@ const Home: NextPage = () => {
 
       <main>
         <BrowsePage
-          featuredMovie={featuredMovieDummy}
-          releaseDates={releaseDatesDummy}
+          featuredMovie={featuredMovie}
           categories={[new CategoryModel('Trending', trendingResultDummy)]}
         />
       </main>

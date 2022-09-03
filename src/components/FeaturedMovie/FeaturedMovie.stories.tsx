@@ -1,8 +1,6 @@
-import React from 'react';
-
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import { MovieModel } from 'models';
+import { getUsRating } from 'models/FeaturedMovieModel';
 import { featuredMovieDummy, releaseDatesDummy } from 'tmdb/dummy';
 
 import FeaturedMovie from './FeaturedMovie';
@@ -15,8 +13,14 @@ export default {
   },
 } as ComponentMeta<typeof FeaturedMovie>;
 
+const data = {
+  movieId: featuredMovieDummy.id,
+  backdropPath: featuredMovieDummy.backdrop_path,
+  title: featuredMovieDummy.title,
+  overview: featuredMovieDummy.overview ?? '',
+  usRating: getUsRating(releaseDatesDummy.results),
+};
+
 export const Default: ComponentStory<typeof FeaturedMovie> = () => (
-  <FeaturedMovie
-    movie={new MovieModel(featuredMovieDummy, releaseDatesDummy)}
-  />
+  <FeaturedMovie movie={data} />
 );

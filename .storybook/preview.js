@@ -1,5 +1,6 @@
 import { ThemeProvider } from '@mui/material/styles';
 import * as NextImage from 'next/image';
+import { RecoilRoot } from 'recoil';
 
 import { theme } from '../src/styles/theme';
 
@@ -8,7 +9,9 @@ const OriginalNextImage = NextImage.default;
 export const decorators = [
   (Story) => (
     <ThemeProvider theme={theme}>
-      <Story />
+      <RecoilRoot>
+        <Story />
+      </RecoilRoot>
     </ThemeProvider>
   ),
 ];

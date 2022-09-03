@@ -1,28 +1,22 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
-const BASE_URL = 'https://api.themoviedb.org/3';
-export const getTrending = async () => {
-  try {
-    const result = await axios.get(
-      `${BASE_URL}/trending/all/day?api_key=${process.env.CHROMATIC_PROJECT_TOKEN}`
-    );
-    console.log(result);
-  } catch (error) {
-    console.error(error);
-  }
-};
+import ERROR from 'constants/errors';
+import * as URL from 'constants/urls';
+import { FeaturedMovieModel, getUsRating } from 'models/FeaturedMovieModel';
+
+import type { ReleaseDates, Trending } from './types';
 
 export const getMovie = async (movie_id: string) => {
   try {
     const [details, credits, lists] = await Promise.all([
       axios.get(
-        `${BASE_URL}/movie/${movie_id}?api_key=${process.env.CHROMATIC_PROJECT_TOKEN}&language=en-US`
+        `${URL.BASE}/movie/${movie_id}?api_key=${process.env.TMDB_API_KEY}&language=en-US`
       ),
       axios.get(
-        `${BASE_URL}/movie/${movie_id}?credits?api_key=${process.env.CHROMATIC_PROJECT_TOKEN}&language=en-US`
+        `${URL.BASE}/movie/${movie_id}?credits?api_key=${process.env.TMDB_API_KEY}&language=en-US`
       ),
       axios.get(
-        `${BASE_URL}/movie/${movie_id}?lists?api_key=${process.env.CHROMATIC_PROJECT_TOKEN}&language=en-US&page=1`
+        `${URL.BASE}/movie/${movie_id}?lists?api_key=${process.env.TMDB_API_KEY}&language=en-US&page=1`
       ),
     ]);
 
@@ -30,4 +24,28 @@ export const getMovie = async (movie_id: string) => {
   } catch (error) {
     console.error(error);
   }
+};
+
+export const fetchFeatured = async (): Promise<FeaturedMovieModel> => {
+  const response: AxiosResponse<Trending> = await axios.get(
+    URL.TRENDING_MOVIE_DAY
+  );
+
+  if (response.data.results.length < 0) throw new Error(ERROR.NO_DATA);
+
+  const movieId = response.data.results[0].id;
+  const releaseDate: AxiosResponse<ReleaseDates> = await axios.get(
+    URL.RELEASE_DATES(movieId)
+  );
+
+  const { backdrop_path, title, overview } = response.data.results[0];
+  const usRating = getUsRating(releaseDate.data.results);
+
+  return {
+    movieId,
+    backdropPath: backdrop_path,
+    title,
+    overview,
+    usRating,
+  };
 };
