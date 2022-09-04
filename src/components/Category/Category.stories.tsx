@@ -21,3 +21,9 @@ export const Default = Template.bind({});
 Default.args = {
   category: new CategoryModel('Category Name', trendingResultDummy),
 };
+
+export const Loading = Template.bind({});
+Loading.args = {
+  category: new CategoryModel('Category Name', trendingResultDummy),
+  loading: true,
+};

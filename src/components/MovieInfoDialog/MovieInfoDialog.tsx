@@ -1,6 +1,7 @@
 import Box from '@mui/material/Box';
 import Dialog, { DialogProps } from '@mui/material/Dialog';
 import Grid from '@mui/material/Grid';
+import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import Typography, { TypographyProps } from '@mui/material/Typography';
 
@@ -24,12 +25,14 @@ interface Props extends DialogProps {
   open: boolean;
   onClose: () => void;
   movie: MovieModel;
+  loading?: boolean;
 }
 
 export default function MovieInfoDialog({
   open,
   onClose,
   movie,
+  loading,
   ...props
 }: Props) {
   // TODO: handle likes
@@ -102,94 +105,106 @@ export default function MovieInfoDialog({
       </MainImage>
 
       {/* movie overview */}
-      <Stack direction={'row'} spacing={2} width={'100%'} px={'5%'} mb={6}>
-        <Box width={'70%'}>
-          <Stack direction={'row'} spacing={2}>
-            <Typography variant={'body1'}>{movie.releaseYear}</Typography>
-            <Typography
-              variant={'body2'}
-              sx={{ px: 0.5, border: '0.4px solid white' }}
-            >
-              {movie.usRating}
-            </Typography>
-            <Typography variant={'body1'}>{movie.formatRuntime}</Typography>
-          </Stack>
-          <Typography sx={{ mt: 2 }}>{movie.overview}</Typography>
-        </Box>
+      {loading ? (
+        <OverviewSkelton />
+      ) : (
+        <Stack direction={'row'} spacing={2} width={'100%'} px={'5%'} mb={6}>
+          <Box width={'70%'}>
+            <Stack direction={'row'} spacing={2}>
+              <Typography variant={'body1'}>{movie.releaseYear}</Typography>
+              <Typography
+                variant={'body2'}
+                sx={{ px: 0.5, border: '0.4px solid white' }}
+              >
+                {movie.usRating}
+              </Typography>
+              <Typography variant={'body1'}>{movie.formatRuntime}</Typography>
+            </Stack>
+            <Typography sx={{ mt: 2 }}>{movie.overview}</Typography>
+          </Box>
 
-        <Stack spacing={1} width={'30%'}>
+          <Stack spacing={1} width={'30%'}>
+            <Box>
+              <IndexTypography>Cast:</IndexTypography>
+              <Typography component={'span'} variant={'body2'}>
+                {credits.mainCastNames.join(', ')}
+              </Typography>
+            </Box>
+
+            <Box>
+              <IndexTypography>Genres:</IndexTypography>
+              <Typography component={'span'} variant={'body2'}>
+                {movie.genreNames.join(', ')}
+              </Typography>
+            </Box>
+          </Stack>
+        </Stack>
+      )}
+
+      {/* more like this */}
+      {loading ? (
+        <SimilarListSkelton />
+      ) : (
+        <Box width={'100%'} px={'5%'} mb={6}>
+          <Typography variant={'h6'} sx={{ mb: 3 }}>
+            More Like This
+          </Typography>
+
+          <Grid container rowSpacing={7} sx={{ mx: 'auto', mb: 4 }}>
+            {similar.map((movie: any) => (
+              <Grid item key={movie.id} xs={4}>
+                <PopperThumbnail movie={movie} sx={{ textAlign: 'center' }} />
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+      )}
+
+      {/* more movie details */}
+      {loading ? (
+        <DetailsSkelton />
+      ) : (
+        <Box width={'100%'} px={'5%'} mb={6}>
+          <Typography variant={'h6'} sx={{ mb: 3 }}>
+            About <b>{movie.title}</b>
+          </Typography>
+
           <Box>
-            <IndexTypography>Cast:</IndexTypography>
+            <IndexTypography>Director:</IndexTypography>
             <Typography component={'span'} variant={'body2'}>
-              {credits.mainCastNames.join(', ')}
+              {credits.directorName}
             </Typography>
           </Box>
 
           <Box>
-            <IndexTypography>Genres:</IndexTypography>
+            <IndexTypography>Cast:</IndexTypography>
+            <Typography component={'span'} variant={'body2'}>
+              {credits.castNames.join(', ')}
+            </Typography>
+          </Box>
+
+          <Box>
+            <IndexTypography>Writer:</IndexTypography>
+            <Typography component={'span'} variant={'body2'}>
+              {credits.writerName}
+            </Typography>
+          </Box>
+
+          <Box>
+            <IndexTypography>Genre:</IndexTypography>
             <Typography component={'span'} variant={'body2'}>
               {movie.genreNames.join(', ')}
             </Typography>
           </Box>
-        </Stack>
-      </Stack>
 
-      {/* more like this */}
-      <Box width={'100%'} px={'5%'} mb={6}>
-        <Typography variant={'h6'} sx={{ mb: 3 }}>
-          More Like This
-        </Typography>
-
-        <Grid container rowSpacing={7} sx={{ mx: 'auto', mb: 4 }}>
-          {similar.map((movie: any) => (
-            <Grid item key={movie.id} xs={4}>
-              <PopperThumbnail movie={movie} sx={{ textAlign: 'center' }} />
-            </Grid>
-          ))}
-        </Grid>
-      </Box>
-
-      {/* more movie details */}
-      <Box width={'100%'} px={'5%'} mb={6}>
-        <Typography variant={'h6'} sx={{ mb: 3 }}>
-          About <b>{movie.title}</b>
-        </Typography>
-
-        <Box>
-          <IndexTypography>Director:</IndexTypography>
-          <Typography component={'span'} variant={'body2'}>
-            {credits.directorName}
-          </Typography>
+          <Box>
+            <IndexTypography>Maturity Rating:</IndexTypography>
+            <Typography component={'span'} variant={'body2'}>
+              {movie.usRating}
+            </Typography>
+          </Box>
         </Box>
-
-        <Box>
-          <IndexTypography>Cast:</IndexTypography>
-          <Typography component={'span'} variant={'body2'}>
-            {credits.castNames.join(', ')}
-          </Typography>
-        </Box>
-
-        <Box>
-          <IndexTypography>Writer:</IndexTypography>
-          <Typography component={'span'} variant={'body2'}>
-            {credits.writerName}
-          </Typography>
-        </Box>
-
-        <Box>
-          <IndexTypography>Genre:</IndexTypography>
-          <Typography component={'span'} variant={'body2'}>
-            {movie.genreNames.join(', ')}
-          </Typography>
-        </Box>
-
-        <Box>
-          <IndexTypography>Maturity Rating:</IndexTypography>
-          <Typography component={'span'} variant={'body2'}>
-            {movie.usRating}
-          </Typography>
-        </Box>
-      </Box>
+      )}
     </Dialog>
   );
 }
@@ -202,4 +217,43 @@ const IndexTypography = (props: TypographyProps) => (
     sx={{ mr: 1 }}
     {...props}
   />
+);
+
+const OverviewSkelton = () => (
+  <Stack direction={'row'} spacing={2} width={'100%'} px={'5%'} mb={6}>
+    <Box width={'70%'}>
+      <Skeleton sx={{ mb: 1, width: '40%' }} />
+      <Skeleton />
+      <Skeleton />
+      <Skeleton sx={{ width: '60%' }} />
+    </Box>
+
+    <Stack spacing={1} width={'30%'}>
+      <Skeleton />
+      <Skeleton />
+    </Stack>
+  </Stack>
+);
+
+const SimilarListSkelton = () => (
+  <Box width={'100%'} px={'5%'} mb={6}>
+    <Skeleton sx={{ fontSize: '1.5rem', width: 200 }} />
+
+    <Grid container columnSpacing={4}>
+      {Array.from(new Array(5)).map((_, index) => (
+        <Grid item key={index} xs={4}>
+          <Skeleton height={100} width={220} />
+        </Grid>
+      ))}
+    </Grid>
+  </Box>
+);
+
+const DetailsSkelton = () => (
+  <Box width={'40%'} px={'5%'} mb={6}>
+    <Skeleton sx={{ mb: 1, width: '40%' }} />
+    <Skeleton />
+    <Skeleton />
+    <Skeleton sx={{ width: '60%' }} />
+  </Box>
 );

@@ -13,9 +13,6 @@ import BrowsePage from './BrowsePage';
 export default {
   title: 'BrowsePage',
   component: BrowsePage,
-  parameters: {
-    backgrounds: { default: 'dark' },
-  },
 } as ComponentMeta<typeof BrowsePage>;
 
 const featured: FeaturedMovieModel = {

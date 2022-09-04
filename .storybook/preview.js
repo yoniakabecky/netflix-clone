@@ -1,3 +1,4 @@
+import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import * as NextImage from 'next/image';
 import { RecoilRoot } from 'recoil';
@@ -10,6 +11,7 @@ export const decorators = [
   (Story) => (
     <ThemeProvider theme={theme}>
       <RecoilRoot>
+        <CssBaseline />
         <Story />
       </RecoilRoot>
     </ThemeProvider>

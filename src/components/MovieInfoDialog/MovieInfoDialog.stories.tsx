@@ -1,8 +1,7 @@
-import { useState } from 'react';
-
 import Button from '@mui/material/Button';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
+import { useOpenState } from 'hooks/useOpenState';
 import { MovieModel } from 'models';
 import { featuredMovieDummy, releaseDatesDummy } from 'tmdb/dummy';
 
@@ -14,23 +13,31 @@ export default {
 } as ComponentMeta<typeof MovieInfoDialog>;
 
 export const Default: ComponentStory<typeof MovieInfoDialog> = () => {
-  const [open, setOpen] = useState(true);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const { open, handleOpen, handleClose } = useOpenState(true);
 
   return (
     <>
-      <Button onClick={handleClickOpen}>Open dialog</Button>
+      <Button onClick={handleOpen}>Open dialog</Button>
       <MovieInfoDialog
         open={open}
         onClose={handleClose}
         movie={new MovieModel(featuredMovieDummy, releaseDatesDummy)}
+      />
+    </>
+  );
+};
+
+export const Loading: ComponentStory<typeof MovieInfoDialog> = () => {
+  const { open, handleOpen, handleClose } = useOpenState(true);
+
+  return (
+    <>
+      <Button onClick={handleOpen}>Open dialog</Button>
+      <MovieInfoDialog
+        open={open}
+        onClose={handleClose}
+        movie={new MovieModel(featuredMovieDummy, releaseDatesDummy)}
+        loading={true}
       />
     </>
   );
