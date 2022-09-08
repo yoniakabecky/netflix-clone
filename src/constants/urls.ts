@@ -10,3 +10,6 @@ export const RELEASE_DATES = (movieId: number) =>
 
 export const MOVIE_CREDIT = (movieId: number) =>
   `${BASE}/movie/${movieId}/credits?${API_KEY}&${LANG_EN_US}`;
+
+export const MOVIE_DETAILS = (movieId: number) =>
+  `${BASE}/movie/${movieId}?${API_KEY}&${LANG_EN_US}`;

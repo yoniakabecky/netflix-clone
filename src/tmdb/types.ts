@@ -50,6 +50,34 @@ export type Crew = {
   job?: string;
 };
 
+export type Details = {
+  adult: boolean;
+  backdrop_path: string | null;
+  belongs_to_collection: null | object;
+  budget: number;
+  genres: Array<Genre>;
+  homepage: string | null;
+  id: number;
+  imdb_id: string;
+  original_language: string;
+  original_title: string;
+  overview: string | null;
+  popularity: number;
+  poster_path: string | null;
+  production_companies: Array<Company>;
+  production_countries: Array<Country>;
+  release_date: string;
+  revenue: number;
+  runtime: number | null;
+  spoken_languages: Array<Language>;
+  status: string;
+  tagline: string | null;
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
+};
+
 export type Genre = {
   id: number;
   name: string;
