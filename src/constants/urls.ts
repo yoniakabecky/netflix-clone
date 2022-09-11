@@ -13,3 +13,6 @@ export const MOVIE_CREDIT = (movieId: number) =>
 
 export const MOVIE_DETAILS = (movieId: number) =>
   `${BASE}/movie/${movieId}?${API_KEY}&${LANG_EN_US}`;
+
+export const SIMILAR_MOVIES = (movieId: number) =>
+  `${BASE}/movie/${movieId}/similar?${API_KEY}&${LANG_EN_US}`;

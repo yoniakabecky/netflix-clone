@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
@@ -10,17 +8,19 @@ import { MuteButton } from 'components/uis/IconButton';
 import MainImage from 'components/uis/MainImage';
 import { RatingTag } from 'components/uis/Tag';
 import type { FeaturedMovieModel } from 'models';
-import { MovieModel } from 'models';
+import { useDialogState } from 'recoils/dialog';
 
 type Props = {
   movie: FeaturedMovieModel;
 };
 
 export default function FeaturedMovie({ movie }: Props) {
-  const [openInfo, setOpenInfo] = useState(false);
+  const { open, handleOpen, setMovie } = useDialogState();
 
-  const handleOpenInfo = () => setOpenInfo(true);
-  const handleCloseInfo = () => setOpenInfo(false);
+  const onClick = () => {
+    handleOpen();
+    setMovie(movie);
+  };
 
   return (
     <>
@@ -53,8 +53,7 @@ export default function FeaturedMovie({ movie }: Props) {
               <Stack direction={'row'} spacing={2} flexGrow={1}>
                 <PlayButton />
 
-                {/* TODO: activate button */}
-                <MoreInfoButton onClick={handleOpenInfo} disabled />
+                <MoreInfoButton onClick={onClick} />
               </Stack>
 
               <Stack
@@ -76,11 +75,7 @@ export default function FeaturedMovie({ movie }: Props) {
         </MainImage>
       </Box>
 
-      <MovieInfoDialog
-        open={openInfo}
-        onClose={handleCloseInfo}
-        movie={new MovieModel(null, null)}
-      />
+      <MovieInfoDialog open={open} />
     </>
   );
 }

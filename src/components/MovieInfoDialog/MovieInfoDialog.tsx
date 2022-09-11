@@ -1,9 +1,12 @@
+import { useMemo } from 'react';
+
 import Box from '@mui/material/Box';
 import Dialog, { DialogProps } from '@mui/material/Dialog';
 import Grid from '@mui/material/Grid';
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import Typography, { TypographyProps } from '@mui/material/Typography';
+import useSWR from 'swr';
 
 import PopperThumbnail from 'components/PopperThumbnail';
 import { PlayButton } from 'components/uis/Button';
@@ -16,43 +19,58 @@ import {
 import LikeButtons from 'components/uis/LikeButtons';
 import MainImage from 'components/uis/MainImage';
 import { StyledTooltip } from 'components/uis/Tooltip';
-import { MovieModel } from 'models';
+import * as URL from 'constants/urls';
 import { parseCreditResponse } from 'models/CreditModel';
-import { creditsDummy, similarDummy } from 'tmdb/dummy';
-import { Movie } from 'tmdb/types';
-
+import { parseDetailsResponse } from 'models/MovieDetailsModel';
+import { parseMovieListResult } from 'models/MovieListItemModel';
+import { useDialogState } from 'recoils/dialog';
+import type { Credit, Details, MovieList } from 'tmdb/types';
 interface Props extends DialogProps {
-  open: boolean;
-  onClose: () => void;
-  movie: MovieModel;
   loading?: boolean;
 }
 
-export default function MovieInfoDialog({
-  open,
-  onClose,
-  movie,
-  loading,
-  ...props
-}: Props) {
+export default function MovieInfoDialog({ loading, ...props }: Props) {
+  const { handleClose, movie } = useDialogState();
+
   // TODO: handle likes
-  const handleDislike = () => {};
-  const handleLike = () => {};
-  const handleLove = () => {};
+  const handleDislike = () => null;
+  const handleLike = () => null;
+  const handleLove = () => null;
 
-  // TODO: fetch additional data
-  const credits = parseCreditResponse(creditsDummy);
-
-  // TODO: fetch similar movies
-  const similar = similarDummy.results.map(
-    (movie) => new MovieModel(movie as Movie, null)
+  const movieId = movie?.movieId ?? null;
+  const { data: detailsData } = useSWR<Details, unknown>(
+    movieId ? URL.MOVIE_DETAILS(movieId) : null
+  );
+  const { data: creditsData } = useSWR<Credit, unknown>(
+    movieId ? URL.MOVIE_CREDIT(movieId) : null
+  );
+  const { data: similarData } = useSWR<MovieList, unknown>(
+    movieId ? URL.SIMILAR_MOVIES(movieId) : null
   );
 
+  const details = useMemo(
+    () => (detailsData ? parseDetailsResponse(detailsData) : undefined),
+    [detailsData]
+  );
+  const credits = useMemo(
+    () => (creditsData ? parseCreditResponse(creditsData) : undefined),
+    [creditsData]
+  );
+  const similar = useMemo(
+    () =>
+      similarData
+        ? similarData.results.map((movie) => parseMovieListResult(movie))
+        : undefined,
+    [similarData]
+  );
+
+  if (!movie) return <div />;
+
   return (
-    <Dialog maxWidth={'md'} fullWidth open={open} onClose={onClose} {...props}>
+    <Dialog maxWidth={'md'} fullWidth onClose={handleClose} {...props}>
       <CloseButton
         aria-label="close"
-        onClick={onClose}
+        onClick={handleClose}
         sx={{
           position: 'absolute',
           right: 8,
@@ -105,20 +123,20 @@ export default function MovieInfoDialog({
       </MainImage>
 
       {/* movie overview */}
-      {loading ? (
+      {loading || !(details && credits) ? (
         <OverviewSkelton />
       ) : (
         <Stack direction={'row'} spacing={2} width={'100%'} px={'5%'} mb={6}>
           <Box width={'70%'}>
             <Stack direction={'row'} spacing={2}>
-              <Typography variant={'body1'}>{movie.releaseYear}</Typography>
+              <Typography variant={'body1'}>{details.releaseYear}</Typography>
               <Typography
                 variant={'body2'}
                 sx={{ px: 0.5, border: '0.4px solid white' }}
               >
                 {movie.usRating}
               </Typography>
-              <Typography variant={'body1'}>{movie.formatRuntime}</Typography>
+              <Typography variant={'body1'}>{details.runtime}</Typography>
             </Stack>
             <Typography sx={{ mt: 2 }}>{movie.overview}</Typography>
           </Box>
@@ -134,7 +152,7 @@ export default function MovieInfoDialog({
             <Box>
               <IndexTypography>Genres:</IndexTypography>
               <Typography component={'span'} variant={'body2'}>
-                {movie.genreNames.join(', ')}
+                {details.genres.join(', ')}
               </Typography>
             </Box>
           </Stack>
@@ -142,7 +160,7 @@ export default function MovieInfoDialog({
       )}
 
       {/* more like this */}
-      {loading ? (
+      {loading || !similar ? (
         <SimilarListSkelton />
       ) : (
         <Box width={'100%'} px={'5%'} mb={6}>
@@ -161,7 +179,7 @@ export default function MovieInfoDialog({
       )}
 
       {/* more movie details */}
-      {loading ? (
+      {loading || !(details && credits) ? (
         <DetailsSkelton />
       ) : (
         <Box width={'100%'} px={'5%'} mb={6}>
@@ -193,7 +211,7 @@ export default function MovieInfoDialog({
           <Box>
             <IndexTypography>Genre:</IndexTypography>
             <Typography component={'span'} variant={'body2'}>
-              {movie.genreNames.join(', ')}
+              {details.genres.join(', ')}
             </Typography>
           </Box>
 
