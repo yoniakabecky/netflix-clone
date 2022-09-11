@@ -89,46 +89,46 @@ export type Language = {
   english_name: string;
 };
 
-export type List = {
+export type List<T> = {
   page: number;
   total_pages: number;
   total_results: number;
+  results: Array<T>;
 };
 
 export type Movie = {
   adult?: boolean;
   backdrop_path: string | null;
-  belongs_to_collection: null | {};
+  belongs_to_collection?: null | {};
   budget?: number;
-  genres: Array<Genre>;
-  homepage: string | null;
+  genres?: Array<Genre>;
+  homepage?: string | null;
   id: number;
-  imdb_id: string | null;
+  imdb_id?: string | null;
   original_language?: string;
   original_title?: string;
   overview: string | null;
   popularity?: number;
   poster_path: string | null;
-  production_companies: Array<Company>;
-  production_countries: Array<Country>;
+  production_companies?: Array<Company>;
+  production_countries?: Array<Country>;
   release_date?: string;
   revenue?: number;
   runtime?: number;
-  spoken_languages: Array<Language>;
-  status: Status;
-  tagline: string | null;
+  spoken_languages?: Array<Language>;
+  status?: Status;
+  tagline?: string | null;
   title: string;
   video?: boolean;
   vote_average?: number;
   vote_count?: number;
 };
 
-export type MovieList = List & {
-  results: Array<MovieListResult | MovieListResultAlt>;
-};
+export type MovieList = List<MovieListResult>;
+export type MovieListAlt = List<MovieListResultAlt>;
 
 export type MovieListResult = {
-  adult?: boolean;
+  adult: boolean;
   backdrop_path: string | null;
   genre_ids: Array<number>;
   id: number;
@@ -136,12 +136,12 @@ export type MovieListResult = {
   original_title?: string;
   overview: string;
   poster_path: string | null;
-  release_date?: string;
+  popularity: number;
+  release_date: string;
   title: string;
-  video?: boolean;
-  vote_average?: number;
-  vote_count?: number;
-  popularity?: number;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
 };
 
 export type MovieListResultAlt = {
@@ -179,7 +179,3 @@ export type Status =
   | 'Post Production'
   | 'Released'
   | 'Canceled';
-
-export type Trending = List & {
-  results: Array<MovieListResult>;
-};

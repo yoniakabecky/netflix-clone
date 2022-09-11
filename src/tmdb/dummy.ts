@@ -1,6 +1,6 @@
-import { Credit, Movie, MovieList, ReleaseDates } from './types';
+import { Credit, Movie, ReleaseDates } from './types';
 
-export const trendingResultDummy: MovieList = {
+export const trendingResultDummy = {
   page: 1,
   results: [
     {
@@ -937,7 +937,7 @@ export const creditsDummy: Credit = {
   ],
 };
 
-export const similarDummy: MovieList = {
+export const similarDummy = {
   page: 1,
   results: [
     {

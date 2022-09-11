@@ -1,4 +1,4 @@
-import { MovieList } from 'tmdb/types';
+import { MovieListAlt } from 'tmdb/types';
 
 import { MovieListModel } from './MovieListModel';
 
@@ -9,7 +9,7 @@ export class CategoryModel {
   totalPages: number;
   totalResults: number;
 
-  constructor(name: string, data: MovieList) {
+  constructor(name: string, data: MovieListAlt) {
     this.name = name;
     this.results = data.results.map((x) => new MovieListModel(x as any));
     this.page = data.page;

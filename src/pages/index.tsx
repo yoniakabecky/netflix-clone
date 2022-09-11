@@ -6,10 +6,10 @@ import BrowsePage from 'components/BrowsePage';
 import * as URL from 'constants/urls';
 import { CategoryModel, parseTrendingAndReleaseDate } from 'models';
 import { trendingResultDummy } from 'tmdb/dummy';
-import { ReleaseDates, Trending } from 'tmdb/types';
+import { MovieList, ReleaseDates } from 'tmdb/types';
 
 const Home: NextPage = () => {
-  const { data: trending, error } = useSWR<Trending, unknown>(
+  const { data: trending, error } = useSWR<MovieList, unknown>(
     URL.TRENDING_MOVIE_DAY
   );
   const { data: releaseDate } = useSWR<ReleaseDates, unknown>(() =>

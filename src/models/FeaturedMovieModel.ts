@@ -1,4 +1,4 @@
-import { ReleaseDates, ReleaseDatesResults, Trending } from 'tmdb/types';
+import type { MovieList, ReleaseDates, ReleaseDatesResults } from 'tmdb/types';
 
 export type FeaturedMovieModel = {
   movieId: number;
@@ -9,7 +9,7 @@ export type FeaturedMovieModel = {
 };
 
 export const parseTrendingAndReleaseDate = (
-  trending: Trending,
+  trending: MovieList,
   releaseDate?: ReleaseDates
 ): FeaturedMovieModel => {
   const { id, backdrop_path, title, overview } = trending.results[0];
