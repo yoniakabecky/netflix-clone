@@ -16,7 +16,12 @@ interface Props extends IconButtonProps {
   handleLove: () => void;
 }
 
-export default function LikeButtons(props: Props) {
+export default function LikeButtons({
+  handleDislike,
+  handleLike,
+  handleLove,
+  ...props
+}: Props) {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -52,7 +57,7 @@ export default function LikeButtons(props: Props) {
             >
               <StyledTooltip title={'Not for me'}>
                 <Box>
-                  <IconButton sx={{ p: 0.25 }} onClick={props.handleDislike}>
+                  <IconButton sx={{ p: 0.25 }} onClick={handleDislike}>
                     <ThumbsUpIcon sx={{ transform: 'rotate(180deg)' }} />
                   </IconButton>
                 </Box>
@@ -60,7 +65,7 @@ export default function LikeButtons(props: Props) {
 
               <StyledTooltip title={'I like this'}>
                 <Box>
-                  <IconButton sx={{ p: 0.25 }} onClick={props.handleLike}>
+                  <IconButton sx={{ p: 0.25 }} onClick={handleLike}>
                     <ThumbsUpIcon />
                   </IconButton>
                 </Box>
@@ -68,7 +73,7 @@ export default function LikeButtons(props: Props) {
 
               <StyledTooltip title={'Love this!'}>
                 <Box>
-                  <IconButton sx={{ p: 0.25 }} onClick={props.handleLove}>
+                  <IconButton sx={{ p: 0.25 }} onClick={handleLove}>
                     <TwoThumbsUpIcon />
                   </IconButton>
                 </Box>
