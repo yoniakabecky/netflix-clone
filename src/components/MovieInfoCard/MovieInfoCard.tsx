@@ -10,11 +10,11 @@ import ChevronDownIcon from 'components/uis/Icon/ChevronDownIcon';
 import { PlayIconButton, StyledIconButton } from 'components/uis/IconButton';
 import LikeButtons from 'components/uis/LikeButtons';
 import { StyledTooltip } from 'components/uis/Tooltip';
-import { MovieListModel, MovieModel } from 'models';
+import { MovieListItemModel, MovieModel } from 'models';
 import { smallImgLoader } from 'utils/imgLoader';
 
 interface Props extends CardProps {
-  movie: MovieModel | MovieListModel;
+  movie: MovieModel | MovieListItemModel;
   anchorEl?: null | Element;
 }
 

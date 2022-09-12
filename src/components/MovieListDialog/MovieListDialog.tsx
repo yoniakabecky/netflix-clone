@@ -55,7 +55,7 @@ export default function MovieListDialog({
               </Grid>
             ))
           : list.map((movie) => (
-              <Grid item key={movie.id} sx={{ width: '20%' }}>
+              <Grid item key={movie.movieId} sx={{ width: '20%' }}>
                 <PopperThumbnail movie={movie} />
               </Grid>
             ))}

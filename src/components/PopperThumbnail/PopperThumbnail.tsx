@@ -4,12 +4,12 @@ import { Box, BoxProps, Fade, Popper } from '@mui/material';
 
 import MovieInfoCard from 'components/MovieInfoCard';
 import { Thumbnail } from 'components/uis/Thumbnail';
-import { MovieListModel } from 'models';
+import { MovieListItemModel } from 'models';
 import { usePopperState } from 'recoils/popper';
 import { smallImgLoader } from 'utils/imgLoader';
 
 interface Props extends BoxProps {
-  movie: MovieListModel;
+  movie: MovieListItemModel;
 }
 
 export default function PopperThumbnail({ movie, ...props }: Props) {
@@ -27,8 +27,8 @@ export default function PopperThumbnail({ movie, ...props }: Props) {
   );
 
   const popperId = useMemo(
-    () => (isCurrentlyOpen ? `popper-${movie.id}` : undefined),
-    [movie.id, isCurrentlyOpen]
+    () => (isCurrentlyOpen ? `popper-${movie.movieId}` : undefined),
+    [movie.movieId, isCurrentlyOpen]
   );
 
   const handleClick = useCallback(

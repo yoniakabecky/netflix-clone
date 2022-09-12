@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import { MovieListModel } from 'models';
+import { parseMovieListResult } from 'models';
 import { trendingResultDummy } from 'tmdb/dummy';
 import { MovieListResult } from 'tmdb/types';
 
@@ -15,9 +15,9 @@ export default {
 export const Default: ComponentStory<typeof PopperThumbnail> = () => (
   <Box m={10}>
     <PopperThumbnail
-      movie={
-        new MovieListModel(trendingResultDummy.results[0] as MovieListResult)
-      }
+      movie={parseMovieListResult(
+        trendingResultDummy.results[0] as MovieListResult
+      )}
     />
   </Box>
 );

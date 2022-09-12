@@ -73,7 +73,7 @@ export default function Category({ category, loading = false }: Props) {
           : results.map(
               (movie) =>
                 movie.backdropPath && (
-                  <PopperThumbnail movie={movie} key={movie.id} />
+                  <PopperThumbnail movie={movie} key={movie.movieId} />
                 )
             )}
       </Stack>
