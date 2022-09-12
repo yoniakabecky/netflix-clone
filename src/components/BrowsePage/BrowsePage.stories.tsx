@@ -1,7 +1,6 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import { CategoryModel } from 'models';
-import { FeaturedMovieModel, getUsRating } from 'models/FeaturedMovieModel';
+import { CategoryModel, FeaturedMovieModel, getUsRating } from 'models';
 import {
   featuredMovieDummy,
   releaseDatesDummy,

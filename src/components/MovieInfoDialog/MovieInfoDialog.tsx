@@ -20,11 +20,14 @@ import LikeButtons from 'components/uis/LikeButtons';
 import MainImage from 'components/uis/MainImage';
 import { StyledTooltip } from 'components/uis/Tooltip';
 import * as URL from 'constants/urls';
-import { parseCreditResponse } from 'models/CreditModel';
-import { parseDetailsResponse } from 'models/MovieDetailsModel';
-import { parseMovieListResult } from 'models/MovieListItemModel';
+import {
+  parseCreditResponse,
+  parseDetailsResponse,
+  parseMovieListResult,
+} from 'models';
 import { useDialogState } from 'recoils/dialog';
 import type { Credit, Details, MovieList } from 'tmdb/types';
+
 interface Props extends DialogProps {
   loading?: boolean;
 }
