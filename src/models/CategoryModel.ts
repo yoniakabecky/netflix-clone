@@ -1,20 +1,21 @@
 import { MovieListItemModel, parseMovieListResult } from 'models';
-import type { MovieListAlt, MovieListResult } from 'tmdb/types';
+import type { MovieList } from 'tmdb/types';
 
-export class CategoryModel {
+export type CategoryModel = {
   name: string;
   page: number;
   results: Array<MovieListItemModel>;
   totalPages: number;
   totalResults: number;
+};
 
-  constructor(name: string, data: MovieListAlt) {
-    this.name = name;
-    this.results = data.results.map((x) =>
-      parseMovieListResult(x as MovieListResult)
-    );
-    this.page = data.page;
-    this.totalPages = data.total_pages;
-    this.totalResults = data.total_results;
-  }
-}
+// TODO: create camelCase function
+export const parseCategoryResponse = (name: string, data: MovieList) => {
+  return {
+    name,
+    page: data.page,
+    totalPages: data.total_pages,
+    totalResults: data.total_results,
+    results: data.results.map((movie) => parseMovieListResult(movie)),
+  };
+};

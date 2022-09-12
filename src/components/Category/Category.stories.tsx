@@ -1,7 +1,8 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import { CategoryModel } from 'models';
+import { parseCategoryResponse } from 'models';
 import { trendingResultDummy } from 'tmdb/dummy';
+import type { MovieList } from 'tmdb/types';
 
 import Category from './Category';
 
@@ -17,13 +18,18 @@ const Template: ComponentStory<typeof Category> = (args) => (
   <Category {...args} />
 );
 
+const category = parseCategoryResponse(
+  'category name',
+  trendingResultDummy as MovieList
+);
+
 export const Default = Template.bind({});
 Default.args = {
-  category: new CategoryModel('Category Name', trendingResultDummy),
+  category,
 };
 
 export const Loading = Template.bind({});
 Loading.args = {
-  category: new CategoryModel('Category Name', trendingResultDummy),
+  category,
   loading: true,
 };

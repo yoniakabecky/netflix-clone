@@ -1,11 +1,12 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import { CategoryModel, FeaturedMovieModel, getUsRating } from 'models';
+import { FeaturedMovieModel, getUsRating, parseCategoryResponse } from 'models';
 import {
   featuredMovieDummy,
   releaseDatesDummy,
   trendingResultDummy,
 } from 'tmdb/dummy';
+import type { MovieList } from 'tmdb/types';
 
 import BrowsePage from './BrowsePage';
 
@@ -22,9 +23,11 @@ const featured: FeaturedMovieModel = {
   usRating: getUsRating(releaseDatesDummy.results),
 };
 
+const category = parseCategoryResponse(
+  'trending',
+  trendingResultDummy as MovieList
+);
+
 export const Default: ComponentStory<typeof BrowsePage> = () => (
-  <BrowsePage
-    featuredMovie={featured}
-    categories={[new CategoryModel('Trending', trendingResultDummy)]}
-  />
+  <BrowsePage featuredMovie={featured} categories={[category]} />
 );

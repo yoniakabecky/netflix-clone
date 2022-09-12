@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import useSWR from 'swr';
@@ -5,22 +7,39 @@ import useSWR from 'swr';
 import BrowsePage from 'components/BrowsePage';
 import * as URL from 'constants/urls';
 import { CategoryModel, parseTrendingAndReleaseDate } from 'models';
-import { trendingResultDummy } from 'tmdb/dummy';
-import { MovieList, ReleaseDates } from 'tmdb/types';
+import { parseMovieListResult } from 'models/MovieListItemModel';
+import type { MovieList, ReleaseDates } from 'tmdb/types';
 
 const Home: NextPage = () => {
-  const { data: trending, error } = useSWR<MovieList, unknown>(
-    URL.TRENDING_MOVIE_DAY
-  );
+  const { data: trending } = useSWR<MovieList, unknown>(URL.TRENDING_MOVIE_DAY);
   const { data: releaseDate } = useSWR<ReleaseDates, unknown>(() =>
     URL.RELEASE_DATES(trending?.results[0].id as number)
   );
 
-  // TODO: handle errors and loading
-  if (!trending || error) return <div>something went wrong</div>;
-  if (!releaseDate) return <div>loading...</div>;
+  const featuredMovie = useMemo(
+    () =>
+      trending ? parseTrendingAndReleaseDate(trending, releaseDate) : undefined,
+    [trending, releaseDate]
+  );
 
-  const featuredMovie = parseTrendingAndReleaseDate(trending, releaseDate);
+  const trendingCategory: CategoryModel | undefined = useMemo(() => {
+    if (!trending) return undefined;
+
+    return {
+      name: 'trending',
+      page: trending.page,
+      totalPages: trending.total_pages,
+      totalResults: trending.total_results,
+      results: trending.results
+        .slice(1)
+        .map((movie) => parseMovieListResult(movie)),
+    };
+  }, [trending]);
+
+  // TODO: handle errors and loading
+  if (!featuredMovie) return <div>something went wrong</div>;
+  if (!trendingCategory) return <div>loading...</div>;
+
   return (
     <div>
       <Head>
@@ -32,7 +51,7 @@ const Home: NextPage = () => {
       <main>
         <BrowsePage
           featuredMovie={featuredMovie}
-          categories={[new CategoryModel('Trending', trendingResultDummy)]}
+          categories={[trendingCategory]}
         />
       </main>
     </div>
