@@ -4,12 +4,12 @@ import { nanoid } from 'nanoid';
 import { atom, useRecoilState, useResetRecoilState } from 'recoil';
 
 import { useOpenState } from 'hooks/useOpenState';
-import { CategoryModel, FeaturedMovieModel } from 'models';
+import { CategoryModel, FeaturedMovieModel, MovieListItemModel } from 'models';
 
 type DialogState = {
-  movie: FeaturedMovieModel | null;
+  movie: FeaturedMovieModel | MovieListItemModel | null;
   list: CategoryModel | null;
-  type: 'info' | 'list';
+  type: 'info' | 'list' | null;
 };
 
 const dialogState = atom<DialogState>({
@@ -17,7 +17,7 @@ const dialogState = atom<DialogState>({
   default: {
     movie: null,
     list: null,
-    type: 'info',
+    type: null,
   },
 });
 
@@ -26,7 +26,7 @@ export const useDialogState = () => {
   const [state, setState] = useRecoilState(dialogState);
   const reset = useResetRecoilState(dialogState);
 
-  const setMovie = (movie: FeaturedMovieModel) =>
+  const setMovie = (movie: FeaturedMovieModel | MovieListItemModel) =>
     setState({ ...state, type: 'info', movie });
 
   const setList = (list: CategoryModel) =>
@@ -43,6 +43,7 @@ export const useDialogState = () => {
     handleOpen,
     movie: state.movie,
     list: state.list,
+    type: state.type,
     setMovie,
     setList,
   };

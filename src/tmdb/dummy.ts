@@ -360,7 +360,7 @@ export const trendingResultDummy = {
   total_results: 20000,
 };
 
-export const featuredMovieDummy: Movie = {
+export const featuredMovieDummy = {
   adult: false,
   backdrop_path: '/AdyJH8kDm8xT8IKTlgpEC15ny4u.jpg',
   belongs_to_collection: {

@@ -1,11 +1,12 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 
 import Box from '@mui/material/Box';
 import Dialog, { DialogProps } from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
 import Grid from '@mui/material/Grid';
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
-import Typography, { TypographyProps } from '@mui/material/Typography';
+import Typography from '@mui/material/Typography';
 import useSWR from 'swr';
 
 import PopperThumbnail from 'components/PopperThumbnail';
@@ -21,26 +22,31 @@ import MainImage from 'components/uis/MainImage';
 import { StyledTooltip } from 'components/uis/Tooltip';
 import * as URL from 'constants/urls';
 import {
+  FeaturedMovieModel,
+  MovieListItemModel,
+  listItemToFeatured,
   parseCreditResponse,
   parseDetailsResponse,
   parseMovieListResult,
 } from 'models';
 import { useDialogState } from 'recoils/dialog';
-import type { Credit, Details, MovieList } from 'tmdb/types';
+import type { Credit, Details, MovieList, ReleaseDates } from 'tmdb/types';
 
 interface Props extends DialogProps {
   loading?: boolean;
 }
 
 export default function MovieInfoDialog({ loading, ...props }: Props) {
-  const { handleClose, movie } = useDialogState();
+  const { handleClose, movie: movieState, type } = useDialogState();
+  const ref = useRef<HTMLDivElement | null>(null);
 
   // TODO: handle likes
   const handleDislike = () => null;
   const handleLike = () => null;
   const handleLove = () => null;
 
-  const movieId = movie?.movieId ?? null;
+  const movieId = movieState?.movieId ?? null;
+  const hasRating = movieState && 'usRating' in movieState;
   const { data: detailsData } = useSWR<Details, unknown>(
     movieId ? URL.MOVIE_DETAILS(movieId) : null
   );
@@ -50,6 +56,14 @@ export default function MovieInfoDialog({ loading, ...props }: Props) {
   const { data: similarData } = useSWR<MovieList, unknown>(
     movieId ? URL.SIMILAR_MOVIES(movieId) : null
   );
+  const { data: releaseDate } = useSWR<ReleaseDates, unknown>(() =>
+    !hasRating && movieId ? URL.RELEASE_DATES(movieId) : null
+  );
+
+  const movie = useMemo(() => {
+    if (hasRating) return movieState as FeaturedMovieModel;
+    return listItemToFeatured(movieState as MovieListItemModel, releaseDate);
+  }, [hasRating, movieState, releaseDate]);
 
   const details = useMemo(
     () => (detailsData ? parseDetailsResponse(detailsData) : undefined),
@@ -67,7 +81,12 @@ export default function MovieInfoDialog({ loading, ...props }: Props) {
     [similarData]
   );
 
-  if (!movie) return <div />;
+  useEffect(() => {
+    if (!ref || !ref.current) return;
+    ref.current.scrollTop = 0;
+  }, [movie]);
+
+  if (!movie || type !== 'info') return <div />;
 
   return (
     <Dialog maxWidth={'md'} fullWidth onClose={handleClose} {...props}>
@@ -82,162 +101,138 @@ export default function MovieInfoDialog({ loading, ...props }: Props) {
         }}
       />
 
-      <MainImage
-        title={movie.title}
-        backdropPath={movie.backdropPath}
-        minHeight={500}
-      >
-        <Box
-          position={'absolute'}
-          bottom={'6rem'}
-          width={'100%'}
-          px={'5%'}
-          zIndex={'modal'}
+      <DialogContent ref={ref} sx={{ p: 0 }}>
+        <MainImage
+          title={movie.title}
+          backdropPath={movie.backdropPath}
+          height={500}
         >
-          <Typography
-            variant={'h5'}
-            sx={{ mb: 2, fontWeight: 'bold', width: '40%' }}
+          <Box
+            position={'absolute'}
+            bottom={'6rem'}
+            width={'100%'}
+            px={'5%'}
+            zIndex={'modal'}
           >
-            {movie.title}
-          </Typography>
+            <Typography
+              variant={'h5'}
+              sx={{ mb: 2, fontWeight: 'bold', width: '40%' }}
+            >
+              {movie.title}
+            </Typography>
 
-          <Box display={'flex'} height={'2rem'}>
-            <Stack direction={'row'} spacing={1} flexGrow={1}>
-              <PlayButton />
+            <Box display={'flex'} height={'2rem'}>
+              <Stack direction={'row'} spacing={1} flexGrow={1}>
+                <PlayButton />
 
-              <StyledTooltip title="Add to My List">
-                <Box>
-                  <StyledIconButton>
-                    <PlusIcon />
-                  </StyledIconButton>
-                </Box>
-              </StyledTooltip>
+                <StyledTooltip title="Add to My List">
+                  <Box>
+                    <StyledIconButton>
+                      <PlusIcon />
+                    </StyledIconButton>
+                  </Box>
+                </StyledTooltip>
 
-              <LikeButtons
-                handleDislike={handleDislike}
-                handleLike={handleLike}
-                handleLove={handleLove}
+                <LikeButtons
+                  handleDislike={handleDislike}
+                  handleLike={handleLike}
+                  handleLove={handleLove}
+                />
+              </Stack>
+
+              <MuteButton sx={{ flexGrow: 0 }} isMute={false} />
+            </Box>
+          </Box>
+        </MainImage>
+
+        {/* movie overview */}
+        {loading || !(details && credits) ? (
+          <OverviewSkelton />
+        ) : (
+          <Stack direction={'row'} spacing={2} width={'100%'} px={'5%'} mb={6}>
+            <Box width={'70%'}>
+              <Stack direction={'row'} spacing={2}>
+                <Typography variant={'body1'}>{details.releaseYear}</Typography>
+                <Typography
+                  variant={'body2'}
+                  sx={{ px: 0.5, border: '0.4px solid white' }}
+                >
+                  {movie.usRating}
+                </Typography>
+                <Typography variant={'body1'}>{details.runtime}</Typography>
+              </Stack>
+              <Typography sx={{ mt: 2 }}>{movie.overview}</Typography>
+            </Box>
+
+            <Stack spacing={1} width={'30%'}>
+              <Detail
+                index={'Cast:'}
+                detail={credits.mainCastNames.join(', ')}
               />
+
+              <Detail index={'Genres:'} detail={details.genres.join(', ')} />
             </Stack>
-
-            <MuteButton sx={{ flexGrow: 0 }} isMute={false} />
-          </Box>
-        </Box>
-      </MainImage>
-
-      {/* movie overview */}
-      {loading || !(details && credits) ? (
-        <OverviewSkelton />
-      ) : (
-        <Stack direction={'row'} spacing={2} width={'100%'} px={'5%'} mb={6}>
-          <Box width={'70%'}>
-            <Stack direction={'row'} spacing={2}>
-              <Typography variant={'body1'}>{details.releaseYear}</Typography>
-              <Typography
-                variant={'body2'}
-                sx={{ px: 0.5, border: '0.4px solid white' }}
-              >
-                {movie.usRating}
-              </Typography>
-              <Typography variant={'body1'}>{details.runtime}</Typography>
-            </Stack>
-            <Typography sx={{ mt: 2 }}>{movie.overview}</Typography>
-          </Box>
-
-          <Stack spacing={1} width={'30%'}>
-            <Box>
-              <IndexTypography>Cast:</IndexTypography>
-              <Typography component={'span'} variant={'body2'}>
-                {credits.mainCastNames.join(', ')}
-              </Typography>
-            </Box>
-
-            <Box>
-              <IndexTypography>Genres:</IndexTypography>
-              <Typography component={'span'} variant={'body2'}>
-                {details.genres.join(', ')}
-              </Typography>
-            </Box>
           </Stack>
-        </Stack>
-      )}
+        )}
 
-      {/* more like this */}
-      {loading || !similar ? (
-        <SimilarListSkelton />
-      ) : (
-        <Box width={'100%'} px={'5%'} mb={6}>
-          <Typography variant={'h6'} sx={{ mb: 3 }}>
-            More Like This
-          </Typography>
-
-          <Grid container rowSpacing={7} sx={{ mx: 'auto', mb: 4 }}>
-            {similar.map((movie: any) => (
-              <Grid item key={movie.id} xs={4}>
-                <PopperThumbnail movie={movie} sx={{ textAlign: 'center' }} />
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
-      )}
-
-      {/* more movie details */}
-      {loading || !(details && credits) ? (
-        <DetailsSkelton />
-      ) : (
-        <Box width={'100%'} px={'5%'} mb={6}>
-          <Typography variant={'h6'} sx={{ mb: 3 }}>
-            About <b>{movie.title}</b>
-          </Typography>
-
-          <Box>
-            <IndexTypography>Director:</IndexTypography>
-            <Typography component={'span'} variant={'body2'}>
-              {credits.directorName}
+        {/* more like this */}
+        {loading || !similar ? (
+          <SimilarListSkelton />
+        ) : (
+          <Box width={'100%'} px={'5%'} mb={6}>
+            <Typography variant={'h6'} sx={{ mb: 3 }}>
+              More Like This
             </Typography>
-          </Box>
 
-          <Box>
-            <IndexTypography>Cast:</IndexTypography>
-            <Typography component={'span'} variant={'body2'}>
-              {credits.castNames.join(', ')}
-            </Typography>
+            <Grid container rowSpacing={7} sx={{ mx: 'auto', mb: 4 }}>
+              {similar.map((movie: any) => (
+                <Grid item key={movie.id} xs={4}>
+                  <PopperThumbnail movie={movie} sx={{ textAlign: 'center' }} />
+                </Grid>
+              ))}
+            </Grid>
           </Box>
+        )}
 
-          <Box>
-            <IndexTypography>Writer:</IndexTypography>
-            <Typography component={'span'} variant={'body2'}>
-              {credits.writerName}
+        {/* more movie details */}
+        {loading || !(details && credits) ? (
+          <DetailsSkelton />
+        ) : (
+          <Box width={'100%'} px={'5%'} mb={6}>
+            <Typography variant={'h6'} sx={{ mb: 3 }}>
+              About <b>{movie.title}</b>
             </Typography>
-          </Box>
 
-          <Box>
-            <IndexTypography>Genre:</IndexTypography>
-            <Typography component={'span'} variant={'body2'}>
-              {details.genres.join(', ')}
-            </Typography>
-          </Box>
+            <Detail index={'Director:'} detail={credits.directorName} />
 
-          <Box>
-            <IndexTypography>Maturity Rating:</IndexTypography>
-            <Typography component={'span'} variant={'body2'}>
-              {movie.usRating}
-            </Typography>
+            <Detail index={'Cast:'} detail={credits.castNames.join(', ')} />
+
+            <Detail index={'Writer:'} detail={credits.writerName} />
+
+            <Detail index={'Genre:'} detail={details.genres.join(', ')} />
+
+            <Detail index={'Maturity Rating:'} detail={movie.usRating ?? '-'} />
           </Box>
-        </Box>
-      )}
+        )}
+      </DialogContent>
     </Dialog>
   );
 }
 
-const IndexTypography = (props: TypographyProps) => (
-  <Typography
-    component={'span'}
-    variant={'subtitle2'}
-    color={'textSecondary'}
-    sx={{ mr: 1 }}
-    {...props}
-  />
+const Detail = ({ index, detail }: { index: string; detail: string }) => (
+  <Box>
+    <Typography
+      component={'span'}
+      variant={'subtitle2'}
+      color={'textSecondary'}
+      sx={{ mr: 1 }}
+    >
+      {index}
+    </Typography>
+    <Typography component={'span'} variant={'body2'}>
+      {detail}
+    </Typography>
+  </Box>
 );
 
 const OverviewSkelton = () => (

@@ -1,7 +1,8 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import { MovieModel } from 'models';
-import { featuredMovieDummy, releaseDatesDummy } from 'tmdb/dummy';
+import { parseMovieListResult } from 'models';
+import { trendingResultDummy } from 'tmdb/dummy';
+import type { MovieListResult } from 'tmdb/types';
 
 import MovieInfoCard from './MovieInfoCard';
 
@@ -12,6 +13,8 @@ export default {
 
 export const Default: ComponentStory<typeof MovieInfoCard> = () => (
   <MovieInfoCard
-    movie={new MovieModel(featuredMovieDummy, releaseDatesDummy)}
+    movie={parseMovieListResult(
+      trendingResultDummy.results[0] as MovieListResult
+    )}
   />
 );

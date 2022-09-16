@@ -1,20 +1,27 @@
+import { useMemo } from 'react';
+
 import Box from '@mui/material/Box';
 import Card, { CardProps } from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Image from 'next/image';
+import useSWR from 'swr';
 
 import CheckIcon from 'components/uis/Icon/CheckIcon';
 import ChevronDownIcon from 'components/uis/Icon/ChevronDownIcon';
 import { PlayIconButton, StyledIconButton } from 'components/uis/IconButton';
 import LikeButtons from 'components/uis/LikeButtons';
 import { StyledTooltip } from 'components/uis/Tooltip';
-import { MovieListItemModel, MovieModel } from 'models';
+import * as URL from 'constants/urls';
+import { MovieListItemModel, parseDetailsResponse } from 'models';
+import { useDialogState } from 'recoils/dialog';
+import { usePopperState } from 'recoils/popper';
+import type { Details } from 'tmdb/types';
 import { smallImgLoader } from 'utils/imgLoader';
 
 interface Props extends CardProps {
-  movie: MovieModel | MovieListItemModel;
+  movie: MovieListItemModel;
   anchorEl?: null | Element;
 }
 
@@ -24,8 +31,22 @@ export default function MovieInfoCard({ movie, ...props }: Props) {
   const handleLike = () => null;
   const handleLove = () => null;
 
-  //TODO: fetch movie details
-  const details = new MovieModel(null, null);
+  const movieId = movie?.movieId ?? null;
+  const { data: detailsData } = useSWR<Details, unknown>(
+    movieId ? URL.MOVIE_DETAILS(movieId) : null
+  );
+  const details = useMemo(
+    () => (detailsData ? parseDetailsResponse(detailsData) : undefined),
+    [detailsData]
+  );
+
+  const { setMovie } = useDialogState();
+  const { close } = usePopperState();
+
+  const openInfoDialog = () => {
+    close();
+    setMovie(movie);
+  };
 
   return (
     <Card sx={{ width: '22vw', minWidth: 352 }} {...props}>
@@ -68,7 +89,7 @@ export default function MovieInfoCard({ movie, ...props }: Props) {
 
           <StyledTooltip title={'Episodes & info'}>
             <Box>
-              <StyledIconButton sx={{ flexGrow: 0 }}>
+              <StyledIconButton sx={{ flexGrow: 0 }} onClick={openInfoDialog}>
                 <ChevronDownIcon />
               </StyledIconButton>
             </Box>
@@ -86,7 +107,7 @@ export default function MovieInfoCard({ movie, ...props }: Props) {
               color={'textSecondary'}
               sx={{ ml: 1 }}
             >
-              {details.formatRuntime}
+              {details.runtime}
             </Typography>
           )}
         </Box>
@@ -96,7 +117,7 @@ export default function MovieInfoCard({ movie, ...props }: Props) {
             {details.genres.map((genre, i) => (
               <Box key={i}>
                 <Typography variant={'caption'} color={'textSecondary'}>
-                  {genre.name}
+                  {genre}
                 </Typography>
                 {details.genres.length - 1 !== i && (
                   <Typography
