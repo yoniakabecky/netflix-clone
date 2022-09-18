@@ -5,27 +5,66 @@ import ClickAwayListener from '@mui/material/ClickAwayListener';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 
+import ThumbsUpFilledIcon from '../Icon/ThumbsUpFilledIcon';
 import ThumbsUpIcon from '../Icon/ThumbsUpIcon';
+import TwoThumbsUpFilledIcon from '../Icon/TwoThumbsUpFilledIcon';
 import TwoThumbsUpIcon from '../Icon/TwoThumbsUpIcon';
 import StyledIconButton from '../IconButton/StyledIconButton';
 import { StyledTooltip } from '../Tooltip';
 
+export type LikeType = 'like' | 'dislike' | 'love';
+export type UserRate = LikeType | null;
+
+const title = {
+  rated: 'Rated',
+  dislike: 'Not for me',
+  like: 'I like this',
+  love: 'Love this!',
+};
+
+const MainIcon = ({ rating }: { rating: UserRate }) => {
+  switch (rating) {
+    case 'like':
+      return <ThumbsUpFilledIcon />;
+
+    case 'dislike':
+      return <ThumbsUpFilledIcon sx={{ transform: 'rotate(180deg)' }} />;
+
+    case 'love':
+      return <TwoThumbsUpFilledIcon />;
+
+    default:
+      return <ThumbsUpIcon />;
+  }
+};
+
+const LikeIcon = ({ rating }: { rating: UserRate }) =>
+  rating === 'like' ? <ThumbsUpFilledIcon /> : <ThumbsUpIcon />;
+
+const DislikeIcon = ({ rating }: { rating: UserRate }) =>
+  rating === 'dislike' ? (
+    <ThumbsUpFilledIcon sx={{ transform: 'rotate(180deg)' }} />
+  ) : (
+    <ThumbsUpIcon sx={{ transform: 'rotate(180deg)' }} />
+  );
+
+const LoveIcon = ({ rating }: { rating: UserRate }) =>
+  rating === 'love' ? <TwoThumbsUpFilledIcon /> : <TwoThumbsUpIcon />;
+
 interface Props extends IconButtonProps {
-  handleDislike: () => void;
-  handleLike: () => void;
-  handleLove: () => void;
+  rating: UserRate;
+  handleLikes: (_: LikeType) => void;
 }
 
-export default function LikeButtons({
-  handleDislike,
-  handleLike,
-  handleLove,
-  ...props
-}: Props) {
+export default function LikeButtons({ rating, handleLikes, ...props }: Props) {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
   const handleClickAway = () => setOpen(false);
+
+  const handleDislike = () => handleLikes('dislike');
+  const handleLike = () => handleLikes('like');
+  const handleLove = () => handleLikes('love');
 
   return (
     <Box position={'relative'}>
@@ -34,7 +73,7 @@ export default function LikeButtons({
         onMouseEnter={handleOpen}
         {...props}
       >
-        <ThumbsUpIcon />
+        <MainIcon rating={rating} />
       </StyledIconButton>
 
       {open && (
@@ -48,33 +87,39 @@ export default function LikeButtons({
             <Stack
               display={'inline-flex'}
               direction={'row'}
-              spacing={1.5}
+              spacing={1}
               bgcolor={'background.default'}
               borderRadius={6}
               py={0.5}
               px={1}
-              width={'7rem'}
+              width={'7.4rem'}
             >
-              <StyledTooltip title={'Not for me'}>
+              <StyledTooltip
+                title={rating === 'dislike' ? title.rated : title.dislike}
+              >
                 <Box>
                   <IconButton sx={{ p: 0.25 }} onClick={handleDislike}>
-                    <ThumbsUpIcon sx={{ transform: 'rotate(180deg)' }} />
+                    <DislikeIcon rating={rating} />
                   </IconButton>
                 </Box>
               </StyledTooltip>
 
-              <StyledTooltip title={'I like this'}>
+              <StyledTooltip
+                title={rating === 'like' ? title.rated : title.like}
+              >
                 <Box>
                   <IconButton sx={{ p: 0.25 }} onClick={handleLike}>
-                    <ThumbsUpIcon />
+                    <LikeIcon rating={rating} />
                   </IconButton>
                 </Box>
               </StyledTooltip>
 
-              <StyledTooltip title={'Love this!'}>
+              <StyledTooltip
+                title={rating === 'love' ? title.rated : title.love}
+              >
                 <Box>
                   <IconButton sx={{ p: 0.25 }} onClick={handleLove}>
-                    <TwoThumbsUpIcon />
+                    <LoveIcon rating={rating} />
                   </IconButton>
                 </Box>
               </StyledTooltip>

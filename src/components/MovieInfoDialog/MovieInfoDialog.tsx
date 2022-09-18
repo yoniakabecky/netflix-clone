@@ -82,11 +82,6 @@ export default function MovieInfoDialog({ loading, ...props }: Props) {
     ref.current.scrollTop = 0;
   }, [movie]);
 
-  // TODO: handle likes
-  const handleDislike = () => null;
-  const handleLike = () => null;
-  const handleLove = () => null;
-
   if (!movie || type !== 'info') return <div />;
 
   return (
@@ -128,11 +123,7 @@ export default function MovieInfoDialog({ loading, ...props }: Props) {
 
                 <MyListButton isOnMyList={isOnMyList} onClick={toggleList} />
 
-                <LikeButtons
-                  handleDislike={handleDislike}
-                  handleLike={handleLike}
-                  handleLove={handleLove}
-                />
+                <LikeButtons rating={null} handleLikes={() => null} />
               </Stack>
 
               <MuteButton sx={{ flexGrow: 0 }} isMute={false} />

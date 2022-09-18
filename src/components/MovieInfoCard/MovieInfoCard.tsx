@@ -30,11 +30,6 @@ interface Props extends CardProps {
 }
 
 export default function MovieInfoCard({ movie, ...props }: Props) {
-  // TODO: handle likes
-  const handleDislike = () => null;
-  const handleLike = () => null;
-  const handleLove = () => null;
-
   const movieId = movie?.movieId ?? null;
   const { data: detailsData } = useSWR<Details, unknown>(
     movieId ? URL.MOVIE_DETAILS(movieId) : null
@@ -79,11 +74,7 @@ export default function MovieInfoCard({ movie, ...props }: Props) {
 
             <MyListButton isOnMyList={isOnMyList} onClick={toggleList} />
 
-            <LikeButtons
-              handleDislike={handleDislike}
-              handleLike={handleLike}
-              handleLove={handleLove}
-            />
+            <LikeButtons rating={null} handleLikes={() => null} />
           </Stack>
 
           <StyledTooltip title={'Episodes & info'}>
