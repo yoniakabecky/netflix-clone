@@ -11,15 +11,13 @@ import useSWR from 'swr';
 
 import PopperThumbnail from 'components/PopperThumbnail';
 import { PlayButton } from 'components/uis/Button';
-import PlusIcon from 'components/uis/Icon/PlusIcon';
 import {
   CloseButton,
   MuteButton,
-  StyledIconButton,
+  MyListButton,
 } from 'components/uis/IconButton';
 import LikeButtons from 'components/uis/LikeButtons';
 import MainImage from 'components/uis/MainImage';
-import { StyledTooltip } from 'components/uis/Tooltip';
 import * as URL from 'constants/urls';
 import {
   FeaturedMovieModel,
@@ -86,6 +84,10 @@ export default function MovieInfoDialog({ loading, ...props }: Props) {
     ref.current.scrollTop = 0;
   }, [movie]);
 
+  const handleMyList = () => {
+    console.log('my list');
+  };
+
   if (!movie || type !== 'info') return <div />;
 
   return (
@@ -125,13 +127,7 @@ export default function MovieInfoDialog({ loading, ...props }: Props) {
               <Stack direction={'row'} spacing={1} flexGrow={1}>
                 <PlayButton />
 
-                <StyledTooltip title="Add to My List">
-                  <Box>
-                    <StyledIconButton>
-                      <PlusIcon />
-                    </StyledIconButton>
-                  </Box>
-                </StyledTooltip>
+                <MyListButton onClick={handleMyList} added={false} />
 
                 <LikeButtons
                   handleDislike={handleDislike}

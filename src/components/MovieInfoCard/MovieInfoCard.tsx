@@ -8,9 +8,12 @@ import Typography from '@mui/material/Typography';
 import Image from 'next/image';
 import useSWR from 'swr';
 
-import CheckIcon from 'components/uis/Icon/CheckIcon';
 import ChevronDownIcon from 'components/uis/Icon/ChevronDownIcon';
-import { PlayIconButton, StyledIconButton } from 'components/uis/IconButton';
+import {
+  MyListButton,
+  PlayIconButton,
+  StyledIconButton,
+} from 'components/uis/IconButton';
 import LikeButtons from 'components/uis/LikeButtons';
 import { StyledTooltip } from 'components/uis/Tooltip';
 import * as URL from 'constants/urls';
@@ -72,13 +75,7 @@ export default function MovieInfoCard({ movie, ...props }: Props) {
           <Stack direction={'row'} spacing={1} flexGrow={1}>
             <PlayIconButton />
 
-            <StyledTooltip title="Add to My List">
-              <Box>
-                <StyledIconButton>
-                  <CheckIcon />
-                </StyledIconButton>
-              </Box>
-            </StyledTooltip>
+            <MyListButton added={false} />
 
             <LikeButtons
               handleDislike={handleDislike}

@@ -5,6 +5,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react';
 
 import CloseButton from './CloseButton';
 import MuteButton from './MuteButton';
+import MyListButton from './MyListButton';
 import PlayIconButton from './PlayIconButton';
 
 export default {
@@ -26,3 +27,13 @@ export const Mute: ComponentStory<typeof IconButton> = () => {
 };
 
 export const Play: ComponentStory<typeof IconButton> = () => <PlayIconButton />;
+
+export const MyList: ComponentStory<typeof IconButton> = () => {
+  const [added, setAdded] = useState(false);
+
+  return (
+    <div style={{ width: 30 }}>
+      <MyListButton added={added} onClick={() => setAdded((prev) => !prev)} />
+    </div>
+  );
+};
