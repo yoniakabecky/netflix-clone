@@ -19,6 +19,7 @@ import {
 import LikeButtons from 'components/uis/LikeButtons';
 import MainImage from 'components/uis/MainImage';
 import * as URL from 'constants/urls';
+import useMyList from 'hooks/useMyList';
 import {
   FeaturedMovieModel,
   MovieListItemModel,
@@ -37,11 +38,6 @@ interface Props extends DialogProps {
 export default function MovieInfoDialog({ loading, ...props }: Props) {
   const { handleClose, movie: movieState, type } = useDialogState();
   const ref = useRef<HTMLDivElement | null>(null);
-
-  // TODO: handle likes
-  const handleDislike = () => null;
-  const handleLike = () => null;
-  const handleLove = () => null;
 
   const movieId = movieState?.movieId ?? null;
   const hasRating = movieState && 'usRating' in movieState;
@@ -79,14 +75,17 @@ export default function MovieInfoDialog({ loading, ...props }: Props) {
     [similarData]
   );
 
+  const [isOnMyList, toggleList] = useMyList(movieId);
+
   useEffect(() => {
     if (!ref || !ref.current) return;
     ref.current.scrollTop = 0;
   }, [movie]);
 
-  const handleMyList = () => {
-    console.log('my list');
-  };
+  // TODO: handle likes
+  const handleDislike = () => null;
+  const handleLike = () => null;
+  const handleLove = () => null;
 
   if (!movie || type !== 'info') return <div />;
 
@@ -127,7 +126,7 @@ export default function MovieInfoDialog({ loading, ...props }: Props) {
               <Stack direction={'row'} spacing={1} flexGrow={1}>
                 <PlayButton />
 
-                <MyListButton onClick={handleMyList} added={false} />
+                <MyListButton isOnMyList={isOnMyList} onClick={toggleList} />
 
                 <LikeButtons
                   handleDislike={handleDislike}

@@ -9,11 +9,11 @@ import { StyledTooltip } from 'components/uis/Tooltip';
 import StyledIconButton from './StyledIconButton';
 
 interface Props extends IconButtonProps {
-  added?: boolean;
+  isOnMyList?: boolean;
 }
 
 export default function MyListButton({
-  added = false,
+  isOnMyList = false,
   onClick,
   ...props
 }: Props) {
@@ -26,7 +26,9 @@ export default function MyListButton({
   const resetClicked = () => setClicked(false);
 
   return (
-    <StyledTooltip title={added ? 'Remove from My List' : 'Add to My List'}>
+    <StyledTooltip
+      title={isOnMyList ? 'Remove from My List' : 'Add to My List'}
+    >
       <Box>
         <StyledIconButton
           onClick={handleClick}
@@ -34,11 +36,11 @@ export default function MyListButton({
           sx={{ position: 'relative' }}
           {...props}
         >
-          <Check sx={{ opacity: added ? 1 : 0 }} />
+          <Check sx={{ opacity: isOnMyList ? 1 : 0 }} />
           <Plus
             sx={{
-              opacity: added ? 0 : 1,
-              transform: clicked ? `rotate(${added ? 90 : 0}deg)` : '',
+              opacity: isOnMyList ? 0 : 1,
+              transform: clicked ? `rotate(${isOnMyList ? 90 : 0}deg)` : '',
             }}
           />
         </StyledIconButton>

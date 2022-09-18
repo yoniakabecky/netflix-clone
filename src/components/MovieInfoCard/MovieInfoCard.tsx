@@ -17,6 +17,7 @@ import {
 import LikeButtons from 'components/uis/LikeButtons';
 import { StyledTooltip } from 'components/uis/Tooltip';
 import * as URL from 'constants/urls';
+import useMyList from 'hooks/useMyList';
 import { MovieListItemModel, parseDetailsResponse } from 'models';
 import { useDialogState } from 'recoils/dialog';
 import { usePopperState } from 'recoils/popper';
@@ -45,6 +46,7 @@ export default function MovieInfoCard({ movie, ...props }: Props) {
 
   const { setMovie } = useDialogState();
   const { close } = usePopperState();
+  const [isOnMyList, toggleList] = useMyList(movieId);
 
   const openInfoDialog = () => {
     close();
@@ -75,7 +77,7 @@ export default function MovieInfoCard({ movie, ...props }: Props) {
           <Stack direction={'row'} spacing={1} flexGrow={1}>
             <PlayIconButton />
 
-            <MyListButton added={false} />
+            <MyListButton isOnMyList={isOnMyList} onClick={toggleList} />
 
             <LikeButtons
               handleDislike={handleDislike}

@@ -33,7 +33,10 @@ export const MyList: ComponentStory<typeof IconButton> = () => {
 
   return (
     <div style={{ width: 30 }}>
-      <MyListButton added={added} onClick={() => setAdded((prev) => !prev)} />
+      <MyListButton
+        isOnMyList={added}
+        onClick={() => setAdded((prev) => !prev)}
+      />
     </div>
   );
 };
