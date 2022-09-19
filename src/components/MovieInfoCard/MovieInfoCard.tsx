@@ -20,8 +20,7 @@ import * as URL from 'constants/urls';
 import useLikeButtons from 'hooks/useLikeButtons';
 import useMyList from 'hooks/useMyList';
 import { MovieListItemModel, parseDetailsResponse } from 'models';
-import { useDialogState } from 'recoils/dialog';
-import { usePopperState } from 'recoils/popper';
+import { useDialogState, usePopperState } from 'recoils';
 import type { Details } from 'tmdb/types';
 import { smallImgLoader } from 'utils/imgLoader';
 

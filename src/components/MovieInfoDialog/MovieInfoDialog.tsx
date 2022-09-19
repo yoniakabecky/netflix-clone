@@ -29,7 +29,7 @@ import {
   parseDetailsResponse,
   parseMovieListResult,
 } from 'models';
-import { useDialogState } from 'recoils/dialog';
+import { useDialogState, useMuteState } from 'recoils';
 import type { Credit, Details, MovieList, ReleaseDates } from 'tmdb/types';
 
 interface Props extends DialogProps {
@@ -38,6 +38,7 @@ interface Props extends DialogProps {
 
 export default function MovieInfoDialog({ loading, ...props }: Props) {
   const { handleClose, movie: movieState, type } = useDialogState();
+  const [isMute, toggleMute] = useMuteState();
   const ref = useRef<HTMLDivElement | null>(null);
 
   const movieId = movieState?.movieId ?? null;
@@ -128,7 +129,11 @@ export default function MovieInfoDialog({ loading, ...props }: Props) {
                 <LikeButtons rating={userRating} handleLikes={handleLikes} />
               </Stack>
 
-              <MuteButton sx={{ flexGrow: 0 }} isMute={false} />
+              <MuteButton
+                sx={{ flexGrow: 0 }}
+                isMute={isMute}
+                onClick={toggleMute}
+              />
             </Box>
           </Box>
         </MainImage>

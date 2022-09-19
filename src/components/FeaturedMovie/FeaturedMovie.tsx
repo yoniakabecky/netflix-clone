@@ -8,7 +8,7 @@ import { MuteButton } from 'components/uis/IconButton';
 import MainImage from 'components/uis/MainImage';
 import { RatingTag } from 'components/uis/Tag';
 import type { FeaturedMovieModel } from 'models';
-import { useDialogState } from 'recoils/dialog';
+import { useDialogState, useMuteState } from 'recoils';
 
 type Props = {
   movie: FeaturedMovieModel;
@@ -16,6 +16,7 @@ type Props = {
 
 export default function FeaturedMovie({ movie }: Props) {
   const { open, handleOpen, setMovie } = useDialogState();
+  const [isMute, toggleMute] = useMuteState();
 
   const onClick = () => {
     handleOpen();
@@ -62,7 +63,11 @@ export default function FeaturedMovie({ movie }: Props) {
                 flexGrow={0}
                 alignItems={'center'}
               >
-                <MuteButton sx={{ width: 44, height: 44 }} isMute={true} />
+                <MuteButton
+                  sx={{ width: 44, height: 44 }}
+                  isMute={isMute}
+                  onClick={toggleMute}
+                />
 
                 {movie.usRating ? (
                   <RatingTag rating={movie.usRating} />
