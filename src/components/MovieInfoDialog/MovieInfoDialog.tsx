@@ -36,7 +36,7 @@ interface Props extends DialogProps {
   loading?: boolean;
 }
 
-export default function MovieInfoDialog({ loading, ...props }: Props) {
+export default function MovieInfoDialog({ loading = false, ...props }: Props) {
   const { handleClose, movie: movieState, type } = useDialogState();
   const [isMute, toggleMute] = useMuteState();
   const ref = useRef<HTMLDivElement | null>(null);

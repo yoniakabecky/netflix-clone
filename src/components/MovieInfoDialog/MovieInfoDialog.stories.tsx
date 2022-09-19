@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import Button from '@mui/material/Button';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
@@ -13,18 +15,19 @@ export default {
   component: MovieInfoDialog,
 } as ComponentMeta<typeof MovieInfoDialog>;
 
-export const Default: ComponentStory<typeof MovieInfoDialog> = () => {
-  const { handleOpen, open, setMovie } = useDialogState();
+const movie = parseTrendingAndReleaseDate(
+  trendingResultDummy as MovieList,
+  releaseDatesDummy
+);
 
-  const onClick = () => {
-    handleOpen();
-    setMovie(
-      parseTrendingAndReleaseDate(
-        trendingResultDummy as MovieList,
-        releaseDatesDummy
-      )
-    );
-  };
+export const Default: ComponentStory<typeof MovieInfoDialog> = () => {
+  const { open, setMovie } = useDialogState();
+
+  const onClick = () => setMovie(movie);
+
+  useEffect(() => {
+    onClick();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>
@@ -35,17 +38,13 @@ export const Default: ComponentStory<typeof MovieInfoDialog> = () => {
 };
 
 export const Loading: ComponentStory<typeof MovieInfoDialog> = () => {
-  const { handleOpen, open, setMovie } = useDialogState();
+  const { open, setMovie } = useDialogState();
 
-  const onClick = () => {
-    handleOpen();
-    setMovie(
-      parseTrendingAndReleaseDate(
-        trendingResultDummy as MovieList,
-        releaseDatesDummy
-      )
-    );
-  };
+  const onClick = () => setMovie(movie);
+
+  useEffect(() => {
+    onClick();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>

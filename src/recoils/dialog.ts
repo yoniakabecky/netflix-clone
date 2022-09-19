@@ -1,9 +1,6 @@
-import { useCallback } from 'react';
-
 import { nanoid } from 'nanoid';
 import { atom, useRecoilState, useResetRecoilState } from 'recoil';
 
-import { useOpenState } from 'hooks/useOpenState';
 import { CategoryModel, FeaturedMovieModel, MovieListItemModel } from 'models';
 
 type DialogState = {
@@ -22,7 +19,6 @@ const dialogState = atom<DialogState>({
 });
 
 export const useDialogState = () => {
-  const { open, handleOpen, handleClose } = useOpenState(false);
   const [state, setState] = useRecoilState(dialogState);
   const reset = useResetRecoilState(dialogState);
 
@@ -32,15 +28,11 @@ export const useDialogState = () => {
   const setList = (list: CategoryModel) =>
     setState({ ...state, type: 'list', list });
 
-  const closeDialog = useCallback(() => {
-    reset();
-    handleClose();
-  }, [handleClose, reset]);
+  const handleClose = () => reset();
 
   return {
-    open,
-    handleClose: closeDialog,
-    handleOpen,
+    open: Boolean(state.type),
+    handleClose,
     movie: state.movie,
     list: state.list,
     type: state.type,

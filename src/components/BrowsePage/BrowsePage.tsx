@@ -2,8 +2,10 @@ import Box from '@mui/material/Box';
 
 import Category from 'components/Category';
 import FeaturedMovie from 'components/FeaturedMovie';
+import MovieInfoDialog from 'components/MovieInfoDialog';
 import NavBar from 'components/NavBar';
 import type { CategoryModel, FeaturedMovieModel } from 'models';
+import { useDialogState } from 'recoils';
 
 type Props = {
   featuredMovie: FeaturedMovieModel;
@@ -11,6 +13,8 @@ type Props = {
 };
 
 export default function BrowsePage({ featuredMovie, categories }: Props) {
+  const { open, type } = useDialogState();
+
   return (
     <>
       <NavBar />
@@ -24,6 +28,8 @@ export default function BrowsePage({ featuredMovie, categories }: Props) {
           ))}
         </Box>
       </Box>
+
+      <MovieInfoDialog open={open && type === 'info'} />
 
       {/* TODO: footer */}
       <Box height={200} />

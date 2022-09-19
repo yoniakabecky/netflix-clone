@@ -2,7 +2,6 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
-import MovieInfoDialog from 'components/MovieInfoDialog';
 import { MoreInfoButton, PlayButton } from 'components/uis/Button';
 import { MuteButton } from 'components/uis/IconButton';
 import MainImage from 'components/uis/MainImage';
@@ -15,13 +14,10 @@ type Props = {
 };
 
 export default function FeaturedMovie({ movie }: Props) {
-  const { open, handleOpen, setMovie } = useDialogState();
+  const { setMovie } = useDialogState();
   const [isMute, toggleMute] = useMuteState();
 
-  const onClick = () => {
-    handleOpen();
-    setMovie(movie);
-  };
+  const onClick = () => setMovie(movie);
 
   return (
     <>
@@ -79,8 +75,6 @@ export default function FeaturedMovie({ movie }: Props) {
           </Box>
         </MainImage>
       </Box>
-
-      <MovieInfoDialog open={open} />
     </>
   );
 }
