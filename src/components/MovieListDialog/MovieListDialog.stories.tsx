@@ -1,8 +1,10 @@
+import { useEffect } from 'react';
+
 import Button from '@mui/material/Button';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import { useOpenState } from 'hooks/useOpenState';
 import { parseCategoryResponse } from 'models';
+import { useDialogState } from 'recoils';
 import { trendingResultDummy } from 'tmdb/dummy';
 import type { MovieList } from 'tmdb/types';
 
@@ -19,28 +21,35 @@ const category = parseCategoryResponse(
 );
 
 export const Default: ComponentStory<typeof MovieListDialog> = () => {
-  const { open, handleOpen, handleClose } = useOpenState(true);
+  const { open, setList } = useDialogState();
+
+  const onClick = () => setList(category);
+
+  useEffect(() => {
+    onClick();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>
-      <Button onClick={handleOpen}>Open dialog</Button>
-      <MovieListDialog open={open} onClose={handleClose} category={category} />
+      <Button onClick={onClick}>Open dialog</Button>
+      <MovieListDialog open={open} />
     </>
   );
 };
 
 export const Loading: ComponentStory<typeof MovieListDialog> = () => {
-  const { open, handleOpen, handleClose } = useOpenState(true);
+  const { open, setList } = useDialogState();
+
+  const onClick = () => setList(category);
+
+  useEffect(() => {
+    onClick();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>
-      <Button onClick={handleOpen}>Open dialog</Button>
-      <MovieListDialog
-        open={open}
-        onClose={handleClose}
-        category={category}
-        loading={true}
-      />
+      <Button onClick={onClick}>Open dialog</Button>
+      <MovieListDialog open={open} loading={true} />
     </>
   );
 };

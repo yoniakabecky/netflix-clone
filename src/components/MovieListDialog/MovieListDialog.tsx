@@ -5,29 +5,24 @@ import Skeleton from '@mui/material/Skeleton';
 
 import PopperThumbnail from 'components/PopperThumbnail';
 import { CloseButton } from 'components/uis/IconButton';
-import { CategoryModel } from 'models';
+import { useDialogState } from 'recoils';
 
 interface Props extends DialogProps {
-  open: boolean;
-  onClose: () => void;
-  category: CategoryModel;
   loading?: boolean;
 }
 
-export default function MovieListDialog({
-  open,
-  onClose,
-  category,
-  loading = false,
-  ...props
-}: Props) {
+export default function MovieListDialog({ loading = false, ...props }: Props) {
+  const { handleClose, list: category, type } = useDialogState();
+
+  if (!category || type !== 'list') return <div />;
+
   const { name, results: list } = category;
 
   return (
-    <Dialog maxWidth={'lg'} fullWidth open={open} onClose={onClose} {...props}>
+    <Dialog maxWidth={'lg'} fullWidth onClose={handleClose} {...props}>
       <CloseButton
         aria-label="close"
-        onClick={onClose}
+        onClick={handleClose}
         sx={{
           position: 'absolute',
           right: 8,

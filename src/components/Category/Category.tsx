@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import PopperThumbnail from 'components/PopperThumbnail';
 import ChevronDownIcon from 'components/uis/Icon/ChevronDownIcon';
 import { CategoryModel } from 'models';
+import { useDialogState } from 'recoils';
 
 type Props = {
   category: CategoryModel;
@@ -13,11 +14,12 @@ type Props = {
 };
 
 export default function Category({ category, loading = false }: Props) {
+  const { setList } = useDialogState();
   const { name, results } = category;
 
   if (results.length <= 0) return <Box />;
 
-  const handleClick = () => null;
+  const handleClick = () => setList(category);
 
   return (
     <Box>

@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Category from 'components/Category';
 import FeaturedMovie from 'components/FeaturedMovie';
 import MovieInfoDialog from 'components/MovieInfoDialog';
+import MovieListDialog from 'components/MovieListDialog';
 import NavBar from 'components/NavBar';
 import type { CategoryModel, FeaturedMovieModel } from 'models';
 import { useDialogState } from 'recoils';
@@ -30,6 +31,7 @@ export default function BrowsePage({ featuredMovie, categories }: Props) {
       </Box>
 
       <MovieInfoDialog open={open && type === 'info'} />
+      <MovieListDialog open={open && type === 'list'} />
 
       {/* TODO: footer */}
       <Box height={200} />
