@@ -19,6 +19,7 @@ import {
 import LikeButtons from 'components/uis/LikeButtons';
 import MainImage from 'components/uis/MainImage';
 import * as URL from 'constants/urls';
+import useLikeButtons from 'hooks/useLikeButtons';
 import useMyList from 'hooks/useMyList';
 import {
   FeaturedMovieModel,
@@ -76,6 +77,7 @@ export default function MovieInfoDialog({ loading, ...props }: Props) {
   );
 
   const [isOnMyList, toggleList] = useMyList(movieId);
+  const [userRating, handleLikes] = useLikeButtons(movieId);
 
   useEffect(() => {
     if (!ref || !ref.current) return;
@@ -123,7 +125,7 @@ export default function MovieInfoDialog({ loading, ...props }: Props) {
 
                 <MyListButton isOnMyList={isOnMyList} onClick={toggleList} />
 
-                <LikeButtons rating={null} handleLikes={() => null} />
+                <LikeButtons rating={userRating} handleLikes={handleLikes} />
               </Stack>
 
               <MuteButton sx={{ flexGrow: 0 }} isMute={false} />
