@@ -22,7 +22,7 @@ export default function Category({ category, loading = false }: Props) {
   const handleClick = () => setList(category);
 
   return (
-    <Box>
+    <Box my={10}>
       <Box mb={1} mx={'auto'} width={'90%'}>
         {loading ? (
           <Typography variant={'h5'}>

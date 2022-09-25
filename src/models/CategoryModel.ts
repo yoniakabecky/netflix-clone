@@ -7,15 +7,21 @@ export type CategoryModel = {
   results: Array<MovieListItemModel>;
   totalPages: number;
   totalResults: number;
+  api?: string;
 };
 
 // TODO: create camelCase function
-export const parseCategoryResponse = (name: string, data: MovieList) => {
+export const parseCategoryResponse = (
+  name: string,
+  data: MovieList,
+  api?: string
+) => {
   return {
     name,
     page: data.page,
     totalPages: data.total_pages,
     totalResults: data.total_results,
     results: data.results.map((movie) => parseMovieListResult(movie)),
+    api,
   };
 };

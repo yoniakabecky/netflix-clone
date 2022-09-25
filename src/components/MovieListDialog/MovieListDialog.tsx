@@ -1,11 +1,16 @@
+import { useMemo } from 'react';
+
 import Dialog, { DialogProps } from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import Grid from '@mui/material/Grid';
 import Skeleton from '@mui/material/Skeleton';
+import useSWR from 'swr';
 
 import PopperThumbnail from 'components/PopperThumbnail';
 import { CloseButton } from 'components/uis/IconButton';
+import { parseMovieListResult } from 'models';
 import { useDialogState } from 'recoils';
+import type { MovieList } from 'tmdb/types';
 
 interface Props extends DialogProps {
   loading?: boolean;
@@ -13,10 +18,18 @@ interface Props extends DialogProps {
 
 export default function MovieListDialog({ loading = false, ...props }: Props) {
   const { handleClose, list: category, type } = useDialogState();
+  const { data } = useSWR<MovieList, unknown>(
+    category?.api ? `${category.api}&page=2` : null
+  );
+  const result2 = useMemo(() => {
+    if (!data) return [];
+    return data.results.map((movie) => parseMovieListResult(movie));
+  }, [data]);
 
   if (!category || type !== 'list') return <div />;
 
-  const { name, results: list } = category;
+  const { name, results } = category;
+  const list = results.concat(result2);
 
   return (
     <Dialog maxWidth={'lg'} fullWidth onClose={handleClose} {...props}>
@@ -32,7 +45,14 @@ export default function MovieListDialog({ loading = false, ...props }: Props) {
       />
 
       {/* title */}
-      <DialogTitle sx={{ fontSize: '2rem', textAlign: 'center', my: '3rem' }}>
+      <DialogTitle
+        sx={{
+          fontSize: '2rem',
+          textAlign: 'center',
+          my: '3rem',
+          textTransform: 'capitalize',
+        }}
+      >
         {loading ? <Skeleton width={240} sx={{ mx: 'auto' }} /> : name}
       </DialogTitle>
 
