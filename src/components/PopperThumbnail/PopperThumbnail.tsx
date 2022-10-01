@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useRef } from 'react';
 
-import { Box, BoxProps, Fade, Popper } from '@mui/material';
+import { Box, BoxProps, Fade, Popper, SxProps } from '@mui/material';
 
 import MovieInfoCard from 'components/MovieInfoCard';
 import { Thumbnail } from 'components/uis/Thumbnail';
@@ -10,9 +10,15 @@ import { smallImgLoader } from 'utils/imgLoader';
 
 interface Props extends BoxProps {
   movie: MovieListItemModel;
+  useViewWidth?: boolean;
 }
 
-export default function PopperThumbnail({ movie, ...props }: Props) {
+export default function PopperThumbnail({
+  movie,
+  useViewWidth = false,
+  sx,
+  ...props
+}: Props) {
   const {
     popperState: { isOpen, currentPopperTitle, anchorEl },
     open,
@@ -57,8 +63,16 @@ export default function PopperThumbnail({ movie, ...props }: Props) {
 
   if (!movie.backdropPath) return <div />;
 
+  const size: SxProps = useViewWidth
+    ? { width: '14vw', height: '7.875vw' }
+    : {};
+
   return (
-    <Box position={'relative'} {...props}>
+    <Box
+      position={'relative'}
+      sx={{ flexShrink: 0, ...size, ...sx }}
+      {...props}
+    >
       <Thumbnail
         imgProps={{
           src: movie.backdropPath,

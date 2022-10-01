@@ -71,7 +71,7 @@ export default function MovieListDialog({ loading = false, ...props }: Props) {
             ))
           : list.map((movie) => (
               <Grid item key={movie.movieId} sx={{ width: '20%' }}>
-                <PopperThumbnail movie={movie} />
+                <PopperThumbnail movie={movie} height={110} />
               </Grid>
             ))}
       </Grid>

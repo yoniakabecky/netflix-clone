@@ -180,7 +180,11 @@ export default function MovieInfoDialog({ loading = false, ...props }: Props) {
             <Grid container rowSpacing={7} sx={{ mx: 'auto', mb: 4 }}>
               {similar.map((movie: any) => (
                 <Grid item key={movie.id} xs={4}>
-                  <PopperThumbnail movie={movie} sx={{ textAlign: 'center' }} />
+                  <PopperThumbnail
+                    movie={movie}
+                    textAlign={'center'}
+                    useViewWidth
+                  />
                 </Grid>
               ))}
             </Grid>

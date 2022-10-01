@@ -18,6 +18,7 @@ export const Default: ComponentStory<typeof PopperThumbnail> = () => (
       movie={parseMovieListResult(
         trendingResultDummy.results[0] as MovieListResult
       )}
+      useViewWidth
     />
   </Box>
 );

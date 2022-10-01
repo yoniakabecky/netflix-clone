@@ -19,10 +19,9 @@ const Thumbnail = forwardRef<HTMLDivElement, Props>(
     return (
       <Card
         sx={{
-          flexShrink: 0,
-          width: '14vw',
+          width: '100%',
           maxWidth: 320,
-          height: '7.875vw',
+          height: '100%',
           maxHeight: 180,
           cursor: 'pointer',
           ...sx,
