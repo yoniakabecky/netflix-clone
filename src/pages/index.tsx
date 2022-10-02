@@ -5,6 +5,7 @@ import Head from 'next/head';
 import useSWR from 'swr';
 
 import BrowsePage from 'components/BrowsePage';
+import { DefaultLoading } from 'components/uis/Skeleton';
 import * as URL from 'constants/urls';
 import { CategoryModel, parseTrendingAndReleaseDate } from 'models';
 import { parseMovieListResult } from 'models/MovieListItemModel';
@@ -36,9 +37,7 @@ const Home: NextPage = () => {
     };
   }, [trending]);
 
-  // TODO: handle errors and loading
-  if (!featuredMovie) return <div>something went wrong</div>;
-  if (!trendingCategory) return <div>loading...</div>;
+  if (!featuredMovie || !trendingCategory) return <DefaultLoading />;
 
   return (
     <div>

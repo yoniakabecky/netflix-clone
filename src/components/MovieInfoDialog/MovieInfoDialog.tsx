@@ -4,7 +4,6 @@ import Box from '@mui/material/Box';
 import Dialog, { DialogProps } from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import Grid from '@mui/material/Grid';
-import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import useSWR from 'swr';
@@ -18,6 +17,11 @@ import {
 } from 'components/uis/IconButton';
 import LikeButtons from 'components/uis/LikeButtons';
 import MainImage from 'components/uis/MainImage';
+import {
+  DetailsSkelton,
+  OverviewSkelton,
+  SimilarListSkelton,
+} from 'components/uis/Skeleton';
 import * as URL from 'constants/urls';
 import useLikeButtons from 'hooks/useLikeButtons';
 import useMyList from 'hooks/useMyList';
@@ -31,6 +35,22 @@ import {
 } from 'models';
 import { useDialogState, useMuteState } from 'recoils';
 import type { Credit, Details, MovieList, ReleaseDates } from 'tmdb/types';
+
+const Detail = ({ index, detail }: { index: string; detail: string }) => (
+  <Box>
+    <Typography
+      component={'span'}
+      variant={'subtitle2'}
+      color={'textSecondary'}
+      sx={{ mr: 1 }}
+    >
+      {index}
+    </Typography>
+    <Typography component={'span'} variant={'body2'}>
+      {detail}
+    </Typography>
+  </Box>
+);
 
 interface Props extends DialogProps {
   loading?: boolean;
@@ -215,58 +235,3 @@ export default function MovieInfoDialog({ loading = false, ...props }: Props) {
     </Dialog>
   );
 }
-
-const Detail = ({ index, detail }: { index: string; detail: string }) => (
-  <Box>
-    <Typography
-      component={'span'}
-      variant={'subtitle2'}
-      color={'textSecondary'}
-      sx={{ mr: 1 }}
-    >
-      {index}
-    </Typography>
-    <Typography component={'span'} variant={'body2'}>
-      {detail}
-    </Typography>
-  </Box>
-);
-
-const OverviewSkelton = () => (
-  <Stack direction={'row'} spacing={2} width={'100%'} px={'5%'} mb={6}>
-    <Box width={'70%'}>
-      <Skeleton sx={{ mb: 1, width: '40%' }} />
-      <Skeleton />
-      <Skeleton />
-      <Skeleton sx={{ width: '60%' }} />
-    </Box>
-
-    <Stack spacing={1} width={'30%'}>
-      <Skeleton />
-      <Skeleton />
-    </Stack>
-  </Stack>
-);
-
-const SimilarListSkelton = () => (
-  <Box width={'100%'} px={'5%'} mb={6}>
-    <Skeleton sx={{ fontSize: '1.5rem', width: 200 }} />
-
-    <Grid container columnSpacing={4}>
-      {Array.from(new Array(5)).map((_, index) => (
-        <Grid item key={index} xs={4}>
-          <Skeleton height={100} width={220} />
-        </Grid>
-      ))}
-    </Grid>
-  </Box>
-);
-
-const DetailsSkelton = () => (
-  <Box width={'40%'} px={'5%'} mb={6}>
-    <Skeleton sx={{ mb: 1, width: '40%' }} />
-    <Skeleton />
-    <Skeleton />
-    <Skeleton sx={{ width: '60%' }} />
-  </Box>
-);
