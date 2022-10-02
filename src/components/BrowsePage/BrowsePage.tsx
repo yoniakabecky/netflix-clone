@@ -5,9 +5,10 @@ import FeaturedMovie from 'components/FeaturedMovie';
 import MovieInfoDialog from 'components/MovieInfoDialog';
 import MovieListDialog from 'components/MovieListDialog';
 import NavBar from 'components/NavBar';
+import PlaySnackbar from 'components/PlaySnackbar';
 import useCategories from 'hooks/useCategories';
 import { CategoryModel, FeaturedMovieModel } from 'models';
-import { useDialogState } from 'recoils';
+import { useDialogState, usePlaySnackbarState } from 'recoils';
 
 type Props = {
   featuredMovie: FeaturedMovieModel;
@@ -17,6 +18,7 @@ type Props = {
 export default function BrowsePage(props: Props) {
   const { open, type } = useDialogState();
   const { categories } = useCategories();
+  const { open: openSnackbar, closeSnackbar } = usePlaySnackbarState();
 
   const allCategories = props.categories.concat(categories);
 
@@ -37,6 +39,7 @@ export default function BrowsePage(props: Props) {
 
       <MovieInfoDialog open={open && type === 'info'} />
       <MovieListDialog open={open && type === 'list'} />
+      <PlaySnackbar open={openSnackbar} onClose={closeSnackbar} />
 
       {/* TODO: footer */}
       <Box height={200} />

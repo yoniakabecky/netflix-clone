@@ -20,7 +20,7 @@ import * as URL from 'constants/urls';
 import useLikeButtons from 'hooks/useLikeButtons';
 import useMyList from 'hooks/useMyList';
 import { MovieListItemModel, parseDetailsResponse } from 'models';
-import { useDialogState, usePopperState } from 'recoils';
+import { useDialogState, usePlaySnackbarState, usePopperState } from 'recoils';
 import type { Details } from 'tmdb/types';
 import { smallImgLoader } from 'utils/imgLoader';
 
@@ -43,6 +43,7 @@ export default function MovieInfoCard({ movie, ...props }: Props) {
   const { close } = usePopperState();
   const [isOnMyList, toggleList] = useMyList(movieId);
   const [userRating, handleLikes] = useLikeButtons(movieId);
+  const { openSnackbar } = usePlaySnackbarState();
 
   const openInfoDialog = () => {
     close();
@@ -71,7 +72,7 @@ export default function MovieInfoCard({ movie, ...props }: Props) {
       <CardContent>
         <Box display={'flex'}>
           <Stack direction={'row'} spacing={1} flexGrow={1}>
-            <PlayIconButton />
+            <PlayIconButton onClick={openSnackbar} />
 
             <MyListButton isOnMyList={isOnMyList} onClick={toggleList} />
 

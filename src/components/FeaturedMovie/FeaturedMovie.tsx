@@ -7,7 +7,7 @@ import { MuteButton } from 'components/uis/IconButton';
 import MainImage from 'components/uis/MainImage';
 import { RatingTag } from 'components/uis/Tag';
 import type { FeaturedMovieModel } from 'models';
-import { useDialogState, useMuteState } from 'recoils';
+import { useDialogState, useMuteState, usePlaySnackbarState } from 'recoils';
 
 type Props = {
   movie: FeaturedMovieModel;
@@ -16,6 +16,7 @@ type Props = {
 export default function FeaturedMovie({ movie }: Props) {
   const { setMovie } = useDialogState();
   const [isMute, toggleMute] = useMuteState();
+  const { openSnackbar } = usePlaySnackbarState();
 
   const onClick = () => setMovie(movie);
 
@@ -48,7 +49,7 @@ export default function FeaturedMovie({ movie }: Props) {
 
             <Box display={'flex'}>
               <Stack direction={'row'} spacing={2} flexGrow={1}>
-                <PlayButton />
+                <PlayButton onClick={openSnackbar} />
 
                 <MoreInfoButton onClick={onClick} />
               </Stack>

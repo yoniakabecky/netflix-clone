@@ -33,7 +33,7 @@ import {
   parseDetailsResponse,
   parseMovieListResult,
 } from 'models';
-import { useDialogState, useMuteState } from 'recoils';
+import { useDialogState, useMuteState, usePlaySnackbarState } from 'recoils';
 import type { Credit, Details, MovieList, ReleaseDates } from 'tmdb/types';
 
 const Detail = ({ index, detail }: { index: string; detail: string }) => (
@@ -60,6 +60,7 @@ export default function MovieInfoDialog({ loading = false, ...props }: Props) {
   const { handleClose, movie: movieState, type } = useDialogState();
   const [isMute, toggleMute] = useMuteState();
   const ref = useRef<HTMLDivElement | null>(null);
+  const { openSnackbar } = usePlaySnackbarState();
 
   const movieId = movieState?.movieId ?? null;
   const hasRating = movieState && 'usRating' in movieState;
@@ -142,7 +143,7 @@ export default function MovieInfoDialog({ loading = false, ...props }: Props) {
 
             <Box display={'flex'} height={'2rem'}>
               <Stack direction={'row'} spacing={1} flexGrow={1}>
-                <PlayButton />
+                <PlayButton onClick={openSnackbar} />
 
                 <MyListButton isOnMyList={isOnMyList} onClick={toggleList} />
 
