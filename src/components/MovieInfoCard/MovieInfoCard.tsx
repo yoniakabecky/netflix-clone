@@ -63,8 +63,8 @@ export default function MovieInfoCard({ movie, ...props }: Props) {
             loader={smallImgLoader}
             src={movie.backdropPath}
             alt={movie.title}
-            layout={'fill'}
-            objectFit={'cover'}
+            fill
+            style={{ objectFit: 'cover' }}
           />
         </Box>
       )}

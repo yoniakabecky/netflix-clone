@@ -41,8 +41,8 @@ export default function MainImage({
           loader={originalImgLoader}
           src={backdropPath}
           alt={title}
-          layout={'fill'}
-          objectFit={'cover'}
+          fill
+          style={{ objectFit: 'cover' }}
         />
       </Inset0Box>
 

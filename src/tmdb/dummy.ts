@@ -1,4 +1,4 @@
-import { Credit, Movie, ReleaseDates } from './types';
+import { Credit, ReleaseDates } from './types';
 
 export const trendingResultDummy = {
   page: 1,

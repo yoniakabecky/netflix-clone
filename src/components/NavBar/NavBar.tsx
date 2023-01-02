@@ -22,13 +22,13 @@ export default function NavBar() {
         <Toolbar disableGutters>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <Box position={'relative'} width={'2rem'} height={'2rem'} mr={2}>
-              <Image src={'/Netflix_Symbol.svg'} alt={'logo'} layout={'fill'} />
+              <Image src={'/Netflix_Symbol.svg'} alt={'logo'} fill />
             </Box>
           </Box>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             <Box position={'relative'} width={'6rem'} mr={2}>
-              <Image src={'/Netflix_Logo.svg'} alt={'logo'} layout={'fill'} />
+              <Image src={'/Netflix_Logo.svg'} alt={'logo'} fill />
             </Box>
 
             <Button color={'secondary'} sx={{ fontWeight: 'normal' }}>

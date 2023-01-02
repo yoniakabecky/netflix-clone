@@ -11,6 +11,11 @@ export default {
 
 export const Default: ComponentStory<typeof Card> = () => (
   <Box width={'14vw'} height={'7.875vw'}>
-    <Thumbnail imgProps={{ src: '/Netflix_Logo.svg', alt: 'sample' }} />
+    <Thumbnail
+      imgProps={{
+        src: '/Netflix_Logo.svg',
+        alt: 'sample',
+      }}
+    />
   </Box>
 );

@@ -14,8 +14,7 @@ interface Props extends CardProps {
 
 const Thumbnail = forwardRef<HTMLDivElement, Props>(
   ({ imgProps, sx, ...props }, ref) => {
-    const { src, alt, layout, ...rest } = imgProps;
-
+    const { src, alt, ...rest } = imgProps;
     return (
       <Card
         sx={{
@@ -30,7 +29,7 @@ const Thumbnail = forwardRef<HTMLDivElement, Props>(
         {...props}
       >
         <Box position={'relative'} width={'100%'} height={'100%'}>
-          <Image src={src} alt={alt} layout={layout ?? 'fill'} {...rest} />
+          <Image src={src} alt={alt} fill {...rest} />
         </Box>
       </Card>
     );
