@@ -1,34 +1,63 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<h1 align="center">Netflix Clone</h1>
 
-## Getting Started
+<p align="center">A project to showcase my skills (and test new technology)</p>
 
-First, run the development server:
+## 👩‍💻 Links
 
-```bash
-npm run dev
-# or
-yarn dev
+- [Live Demo](https://netflix-clone-yoniakabecky.vercel.app/)
+
+- [UI Library](https://62774f6193a30c004a5e5f00-mmntnuaaxh.chromatic.com/ 'Storybook')
+
+## 🚀 Available Commands
+
+This project using [pnpm](https://pnpm.io). Haven't tried it yet? Why don't you try it out 👉 [pnpm installation](https://pnpm.io/installation)
+
+### Run this project
+
+```
+$ pnpm i
+$ pnpm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3001](http://localhost:3001) to view it in the browser.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+### Build
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+```
+$ pnpm run build
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### Storybook
 
-## Learn More
+```
+$ pnpm run storybook
+```
 
-To learn more about Next.js, take a look at the following resources:
+Open [http://localhost:6006](http://localhost:6006) to view storybook in the browser.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🛠️ Built With
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- [TMDB API](https://www.themoviedb.org/)
+- TypeScript
+- Next.js
+- Vercel
+- Storybook
+- Material-UI
 
-## Deploy on Vercel
+## Future Updates (maybe)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- [ ] Search Function
+- [ ] Login
+- [ ] Testing
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## 😶 About Me
+
+**Yoni Aoki**
+
+- [Profile](https://github.com/yoniakabecky)
+- [Email](mailto:yoniakabecky@gmail.com)
+- [Website](https://yoniakabecky.com)
+
+## 🤝 Support
+
+Any feedbacks and advices are welcome😆 Give a ⭐️ if you like this project!
